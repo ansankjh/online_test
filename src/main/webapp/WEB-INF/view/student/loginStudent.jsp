@@ -5,12 +5,12 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>addStudent</title>
+		<title>loginStudent</title>
 	</head>
 	<body>
-		<h1>학생등록</h1>
+		<h1>학생로그인</h1>
 		<div>${msg}</div>
-		<form action="${pageContext.request.contextPath}/student/addStudent" method="post">
+		<form action="${pageContext.request.contextPath}/loginStudent" method="post">
 			<table border="1">
 				<tr>
 					<td>학생아이디</td>
@@ -24,15 +24,9 @@
 						<input type="password" name="studentPw">
 					</td>
 				</tr>
-				<tr>
-					<td>학생이름</td>
-					<td>
-						<input type="text" name="studentName">
-					</td>
-				</tr>
 			</table>
 			<div>
-				<button type="submit">등록</button>
+				<button type="submit">학생로그인</button>
 			</div>
 		</form>
 	</body>

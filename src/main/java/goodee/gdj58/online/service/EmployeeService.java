@@ -41,15 +41,16 @@ public class EmployeeService {
 		return employeeMapper.insertEmployee(employee);
 	}
 	// 사원목록수
-	public int getEmployeeCount() {
-		return employeeMapper.selectEmployeeCount();
+	public int getEmployeeCount(String searchWord) {
+		return employeeMapper.selectEmployeeCount(searchWord);
 	}
 	// 사원리스트
-	public List<Employee> getEmployeeList(int currentPage, int rowPerPage) {
+	public List<Employee> getEmployeeList(int currentPage, int rowPerPage, String searchWord) {
 		int beginRow = (currentPage - 1) * rowPerPage;
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("beginRow", beginRow);
 		paramMap.put("rowPerPage", rowPerPage);
+		paramMap.put("searchWord", searchWord);
 		return employeeMapper.selectEmployeeList(paramMap);
 	}
 	

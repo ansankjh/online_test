@@ -5,34 +5,27 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>addTacher</title>
+		<title>loginTeacher</title>
 	</head>
 	<body>
-		<h1>선생님 등록</h1>
-		<div>${msg}</div>
-		<form action="${pageContext.request.contextPath}/teacher/addTeacher" method="post">
+		<h1>강사 로그인</h1>
+		<form action="${pageContext.request.contextPath}/loginTeacher" method="post">
 			<table border="1">
 				<tr>
-					<td>선생님 아이디</td>
+					<td>아이디</td>
 					<td>
 						<input type="text" name="teacherId">
 					</td>
 				</tr>
 				<tr>
-					<td>선생님 비밀번호</td>
+					<td>비밀번호</td>
 					<td>
 						<input type="password" name="teacherPw">
 					</td>
 				</tr>
-				<tr>
-					<td>선생님 이름</td>
-					<td>
-						<input type="text" name="teacherName">
-					</td>
-				</tr>
 			</table>
 			<div>
-				<button type="submit">등록</button>
+				<button type="submit">로그인</button>
 			</div>
 		</form>
 	</body>

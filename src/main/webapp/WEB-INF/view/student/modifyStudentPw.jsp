@@ -5,16 +5,16 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>modifyEmpPw</title>
+		<title>modifyStudentPw</title>
 	</head>
 	<body>
-		<h1>${loginEmp.empName}사원 비밀번호 수정</h1>
-		<form action="${pageContext.request.contextPath}/employee/modifyEmpPw" method="post">
+		<h1>${loginStudent.studentName} 비밀번호 수정</h1>
+		<form action="${pageContext.request.contextPath}/student/modifyStudentPw" method="post">
 			<table border="1">
 				<tr>
 					<td>아이디</td>
 					<td>
-						<input type="text" name="empId" readonly="readonly" value="${loginEmp.empId}">
+						<input type="text" name="studentId" readonly="readonly" value="${loginStudent.studentId}">
 					</td>
 				</tr>
 				<tr>

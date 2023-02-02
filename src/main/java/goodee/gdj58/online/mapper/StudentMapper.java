@@ -9,6 +9,13 @@ import goodee.gdj58.online.vo.Student;
 
 @Mapper
 public interface StudentMapper {
+	
+	// 학생 비밀번호 수정
+	int updateStudentPw(Map<String, Object> paramMap);
+	
+	// 학생 로그인
+	Student loginStudent(Student student);
+	
 	// 학생 삭제
 	int deleteStudent(int studentNo);
 	

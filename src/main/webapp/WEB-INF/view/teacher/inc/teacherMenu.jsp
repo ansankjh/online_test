@@ -13,12 +13,11 @@
 	<!-- 학생목록, 학생삭제 -->
 	
 	<!-- 로그아웃 -->
-	<c:if test="${loginEmp != null}">
-		<a href="${pageContext.request.contextPath}/employee/logout">로그아웃</a>
-		<a href="${pageContext.request.contextPath}/employee/modifyEmpPw">비밀번호수정</a>
+	<c:if test="${loginTeacher != null}">
+		<a href="${pageContext.request.contextPath}/teacher/teacherLogout">로그아웃</a>
+		<a href="${pageContext.request.contextPath}/teacher/modifyTeacherPw">비밀번호수정</a>
 	</c:if>
-	<c:if test="${loginEmp == null}">
-		<a href="${pageContext.request.contextPath}/loginEmp">로그인</a>
+	<c:if test="${loginTeacher == null}">
+		<a href="${pageContext.request.contextPath}/loginTeacher">로그인</a>
 	</c:if>
-	
 </div>

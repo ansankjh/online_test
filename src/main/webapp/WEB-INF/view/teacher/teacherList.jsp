@@ -8,7 +8,7 @@
 		<title>teacherList</title>
 	</head>
 	<body>
-		<c:import url="/WEB-INF/view/employee/inc/empMenu.jsp"></c:import>
+		<c:import url="/WEB-INF/view/teacher/inc/teacherMenu.jsp"></c:import>
 		<h1>선생님 목록</h1>
 		<a href="${pageContext.request.contextPath}/teacher/addTeacher">선생님 등록</a>
 		<table border="1">

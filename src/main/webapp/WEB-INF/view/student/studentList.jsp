@@ -8,7 +8,7 @@
 		<title>studentList</title>
 	</head>
 	<body>
-		<c:import url="/WEB-INF/view/employee/inc/empMenu.jsp"></c:import>
+		<c:import url="/WEB-INF/view/student/inc/studentMenu.jsp"></c:import>
 		<h1>학생목록</h1>
 		<a href="${pageContext.request.contextPath}/student/addStudent">학생등록</a>
 		<table border="1">

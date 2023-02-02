@@ -42,10 +42,16 @@
 	
 	<!-- 사원리스트 목록수 -->
 	<select id="selectEmployeeCount"
+		parameterType="java.lang.String"
 		resultType="java.lang.Integer">
 		SELECT
 			COUNT(*)
 		FROM employee
+		<where>
+			<if test="searchWord != null || searchWord eq ''">
+				emp_name like CONCAT('%',#{searchWord},'%')
+			</if>
+		</where>
 	</select>
 	
 	<!-- 사원목록 -->
@@ -58,6 +64,11 @@
 			, emp_id empId
 			, emp_name empName
 		FROM employee
+		<where>
+			<if test="searchWord != null || searchWord eq ''">
+				emp_name like CONCAT('%',#{searchWord},'%')
+			</if>
+		</where>
 		ORDER BY emp_no DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
