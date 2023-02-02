@@ -39,23 +39,22 @@
 		</form>
 		<!-- 페이징 -->
 		<div>
-			<!-- 첫페이지 -->
 			<c:if test="${currentPage != 1}">
-				<a href="${pageContext.request.contextPath}/employee/empList?currentPage=1&searchWord=${searchWord}&startPage=${1}&endPage=${10}">처음페이지</a>
+				<a href="${pageContext.request.contextPath}/employee/empList?currentPage=1&searchWord=${searchWord}">처음</a>
 			</c:if>
-			<!-- 이전 페이지 -->
-			<c:if test="${currentPage > 1 && startPage != 1}">
-				<a href="${pageContext.request.contextPath}/employee/empList?currentPage=${currentPage-10}&searchWord=${searchWord}&startPage=${startPage-10}&endPage=${endPage-10}">이전</a>
+			<c:if test="${currentPage > 1}">
+				<a href="${pageContext.request.contextPath}/employee/empList?currentPage=${currentPage-1}&searchWord=${searchWord}">이전</a>
 			</c:if>
-			<!-- 페이지숫자 -->
 			<c:forEach var="i" begin="${startPage}" end="${endPage}" step="1">
-				<a href="${pageContext.request.contextPath}/employee/empList?currentPage=${i}&startPage=${startPage}&endPage=${endPage}">${i}</a>
+				<a href="${pageContext.request.contextPath}/employee/empList?currentPage=${i}&searchWord=${searchWord}">${i}</a>
 			</c:forEach>
-			<!-- 다음페이지, 마지막페이지 -->
-			<c:if test="${currentPage+10 < lastPage}">
-				<a href="${pageContext.request.contextPath}/employee/empList?currentPage=${currentPage+10}&searchWord=${searchWord}&startPage=${startPage+10}&endPage=${endPage+10}">다음</a>
-				<a href="${pageContext.request.contextPath}/employee/empList?currentPage=${lastPage}&searchWord=${searchWord}&endPage=${lastPage}">마지막페이지</a>
+			<c:if test="${currentPage < lastPage}">
+				<a href="${pageContext.request.contextPath}/employee/empList?currentPage=${currentPage+1}&searchWord=${searchWord}">다음</a>
 			</c:if>
+			<c:if test="${currentPage != lastPage}">
+				<a href="${pageContext.request.contextPath}/employee/empList?currentPage=${lastPage}&searchWord=${searchWord}">마지막</a>
+			</c:if>
+				
 		</div>
 	</body>
 </html>

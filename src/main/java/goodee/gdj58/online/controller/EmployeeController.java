@@ -103,8 +103,6 @@ public class EmployeeController {
 							, @RequestParam(value="currentPage", defaultValue = "1") int currentPage
 							, @RequestParam(value="rowPerPage", defaultValue = "10") int rowPerPage
 							, @RequestParam(value="searchWord", defaultValue = "") String searchWord
-							, @RequestParam(value="startPage", defaultValue = "1") int startPage
-							, @RequestParam(value="endPage", defaultValue = "10") int endPage
 							, HttpSession session) { 
 							// request.getParameter("")를 대신하는 코드
 							// null로 들어오면 1로 디폴트값 정해주기
@@ -113,15 +111,17 @@ public class EmployeeController {
 		log.debug(rowPerPage + "<-- rowPerPage");
 		List<Employee> list = employeeService.getEmployeeList(currentPage, rowPerPage, searchWord);
 		int count = employeeService.getEmployeeCount(searchWord);
-		int lastPage = 0;
-		if(count % rowPerPage == 0) {
-			lastPage = count / rowPerPage;
-		} else if(count % rowPerPage != 0) {
-			lastPage = (count / rowPerPage) + 1;
+		int lastPage = count / rowPerPage;
+		if(count % rowPerPage != 0) {
+			lastPage = lastPage + 1;
 		}
 		log.debug(lastPage + "<-- lastPage");
-		
-		if(currentPage > lastPage) {
+		int startPage = (((currentPage - 1) / 10) * 10) + 1;
+		int endPage = startPage + 9;
+		if(startPage < 1) {
+			startPage = 1;
+		} 
+		if(endPage > lastPage) {
 			endPage = lastPage;
 		}
 		
