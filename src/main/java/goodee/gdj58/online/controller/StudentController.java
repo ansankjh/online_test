@@ -94,7 +94,7 @@ public class StudentController {
 		return "redirect:/student/studentList";
 	}
 	
-	// 학생목록 studentList.jsp
+	// 학생목록 studentList.jsp employee가 보는 학생 목록
 	@GetMapping("/student/studentList")
 	public String studentList(Model model
 								, @RequestParam(value="currentPage", defaultValue="1") int currentPage
