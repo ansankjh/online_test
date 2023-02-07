@@ -10,7 +10,7 @@
 	<body>
 		<h1>선생님 등록</h1>
 		<div>${msg}</div>
-		<form action="${pageContext.request.contextPath}/teacher/addTeacher" method="post">
+		<form action="${pageContext.request.contextPath}/employee/addTeacher" method="post">
 			<table border="1">
 				<tr>
 					<td>선생님 아이디</td>

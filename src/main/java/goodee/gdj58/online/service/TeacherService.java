@@ -10,11 +10,48 @@ import org.springframework.transaction.annotation.Transactional;
 
 import goodee.gdj58.online.mapper.TeacherMapper;
 import goodee.gdj58.online.vo.Teacher;
+import goodee.gdj58.online.vo.Test;
 
 @Service
 @Transactional
 public class TeacherService {
 	@Autowired private TeacherMapper teacherMapper;
+	
+	// 시험회차 삭제
+	public int removeTest(int testNo) {
+		return teacherMapper.deleteTest(testNo);
+	}
+	
+	// 시험회차 수정을 위한 조회
+	public HashMap<String, Object> getTestByUpdate(int testNo) {
+		return teacherMapper.selectTestByUpdate(testNo);
+	}
+	
+	// 시험회차 수정
+	public int modifyTest(Test test) {
+		return teacherMapper.updateTest(test);
+	}
+	
+	// 시험회차 등록
+	public int addTest(Test test) {
+		return teacherMapper.insertTest(test);
+	}
+	
+	// 시험회차 목록수
+	public int getTestCountByTeacher(String searchWord) {
+		return teacherMapper.selectTestCountByTeacher(searchWord);
+	}
+	
+	// 시험회차 목록
+	public List<Map<String, Object>> getTestListByTeacher(int currentPage, int rowPerPage, String searchWord) {
+		int beginRow = (currentPage - 1) * rowPerPage;
+		Map<String, Object>paramMap = new HashMap<String, Object>();
+		paramMap.put("beginRow", beginRow);
+		paramMap.put("rowPerPage", rowPerPage);
+		paramMap.put("searchWord", searchWord);
+		return teacherMapper.selectTestListByTeacher(paramMap);
+	}
+	
 	
 	// 비밀번호 수정 
 	public int updateTeacherPw(int teacherNo, String oldPw, String newPw) {

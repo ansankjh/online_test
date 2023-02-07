@@ -5,11 +5,11 @@
 	<a href="${pageContext.request.contextPath}/employee/empList">사원관리</a> 
 	<!-- 등록시 ID체크(employee + student + teacher) -->
 	<!-- 강사리스트 강사 등록,삭제 -->
-	<a href="${pageContext.request.contextPath}/teacher/teacherList">강사관리</a>
+	<a href="${pageContext.request.contextPath}/employee/teacherList">강사관리</a>
 	<!-- 강사목록, 강사삭제 -->
 	
 	<!-- 학생리스트 학생 등록,삭제 학생은 시험만 칠수 있고 시험성적 확인x --> 
-	<a href="${pageContext.request.contextPath}/student/studentList">학생관리</a> 
+	<a href="${pageContext.request.contextPath}/employee/studentList">학생관리</a> 
 	<!-- 학생목록, 학생삭제 -->
 	
 	<!-- 로그아웃 -->

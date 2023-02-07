@@ -20,8 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class StudentController {
-	@Autowired private StudentService studentService;
-	@Autowired private IdService idService;
+	@Autowired StudentService studentService;
+	@Autowired IdService idService;
 	
 	// 학생 비밀번호 수정 폼
 	@GetMapping("/student/modifyStudentPw")
@@ -60,57 +60,5 @@ public class StudentController {
 	public String studentLogout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/student/studentList";
-	}
-	
-	// 학생 삭제
-	@GetMapping("/student/removeStudent")
-	public String removeStudent(int studentNo) {
-		int row = studentService.removeStudent(studentNo);
-		
-		return "redirect:/student/studentList";
-	}
-	
-	// 학생 등록 addStudent.jsp 폼
-	@GetMapping("/student/addStudent")
-	public String addStudent() {
-		return "student/addStudent";
-	}
-	
-	// 학생 등록 addStudent.jsp 액션
-	@PostMapping("/student/addStudent")
-	public String addStudent(Model model, Student student) {
-		// 아이디 중복체크
-		String idCheck = idService.getIdCheck(student.getStudentId());
-		if(idCheck != null) {
-			model.addAttribute("msg", "중복된아이디");
-			return "student/addStudent";
-		}
-		
-		int row = studentService.addStudent(student);
-		if(row == 0) {
-			model.addAttribute("msg", "시스템 에러로 등록 실패");
-			return "student/addStudent";
-		}
-		return "redirect:/student/studentList";
-	}
-	
-	// 학생목록 studentList.jsp employee가 보는 학생 목록
-	@GetMapping("/student/studentList")
-	public String studentList(Model model
-								, @RequestParam(value="currentPage", defaultValue="1") int currentPage
-								, @RequestParam(value="rowPerPage", defaultValue="10") int rowPerPage) {
-		List<Student> list = studentService.getStudentList(currentPage, rowPerPage);
-		int count = studentService.getStudentCount();
-		int lastPage = 0;
-		if(count % rowPerPage == 0) {
-			lastPage = count / rowPerPage;
-		} else if(count % rowPerPage != 0) {
-			lastPage = (count / rowPerPage) + 1;
-		}
-		model.addAttribute("list", list);
-		model.addAttribute("currentPage", currentPage);
-		model.addAttribute("lastPage", lastPage);
-		
-		return "student/studentList";
 	}
 }

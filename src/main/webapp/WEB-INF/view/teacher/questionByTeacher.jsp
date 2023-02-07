@@ -4,14 +4,15 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>testList</title>
+		<title>questionByTeacher</title>
 	</head>
 	<body>
-		<h1>시험회차</h1>
-		<table border="1">
-			<tr>
-				<th></th>
-			</tr>
-		</table>
+		<h1>시험문제</h1>
+		<a>시험추가</a>
+		<div>
+			<div>
+			
+			</div>		
+		</div>
 	</body>
 </html>

@@ -8,9 +8,9 @@
 		<title>studentList</title>
 	</head>
 	<body>
-		<c:import url="/WEB-INF/view/student/inc/studentMenu.jsp"></c:import>
+		<c:import url="/WEB-INF/view/employee/inc/empMenu.jsp"></c:import>
 		<h1>학생목록</h1>
-		<a href="${pageContext.request.contextPath}/student/addStudent">학생등록</a>
+		<a href="${pageContext.request.contextPath}/employee/addStudent">학생등록</a>
 		<table border="1">
 			<tr>
 				<th>학생번호</th>
@@ -24,7 +24,7 @@
 					<td>${s.studentId}</td>
 					<td>${s.studentName}</td>
 					<td>
-						<a href="${pageContext.request.contextPath}/student/removeStudent?studentNo=${s.studentNo}">삭제</a>
+						<a href="${pageContext.request.contextPath}/employee/removeStudent?studentNo=${s.studentNo}">삭제</a>
 					</td>
 				</tr>
 			</c:forEach>
@@ -32,17 +32,17 @@
 		<!-- 페이징 -->
 		<div>
 			<c:if test="${currentPage != 1}">
-				<a href="${pageContext.request.contextPath}/student/studentList?currentPage=1">처음</a>
+				<a href="${pageContext.request.contextPath}/employee/studentList?currentPage=1">처음</a>
 			</c:if>
 			<c:if test="${currentPage > 1}">
-				<a href="${pageContext.request.contextPath}/student/studentList?currentPage=${currentPage-1}">이전</a>
+				<a href="${pageContext.request.contextPath}/employee/studentList?currentPage=${currentPage-1}">이전</a>
 			</c:if>
 			${currentPage}
 			<c:if test="${currentPage < lastPage}">
-				<a href="${pageContext.request.contextPath}/student/studentList?currentPage=${currentPage+1}">다음</a>
+				<a href="${pageContext.request.contextPath}/employee/studentList?currentPage=${currentPage+1}">다음</a>
 			</c:if>
 			<c:if test="${currentPage != lastPage}">
-				<a href="${pageContext.request.contextPath}/student/studentList?currentPage=${lastPage}">마지막</a>
+				<a href="${pageContext.request.contextPath}/employee/studentList?currentPage=${lastPage}">마지막</a>
 			</c:if>
 		</div>
 	</body>
