@@ -1,6 +1,5 @@
 package goodee.gdj58.online.controller;
 
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import goodee.gdj58.online.service.IdService;
 import goodee.gdj58.online.service.TeacherService;
+import goodee.gdj58.online.vo.Example;
+import goodee.gdj58.online.vo.Question;
 import goodee.gdj58.online.vo.Teacher;
 import goodee.gdj58.online.vo.Test;
 import lombok.extern.slf4j.Slf4j;
@@ -26,12 +27,45 @@ public class TeacherController {
 	@Autowired TeacherService teacherService;
 	@Autowired IdService idService;
 	
-	// 시험문제
+	
+	// 시험문제 출력
 	@GetMapping("/teacher/questionByTeacher")
-	public String questionByTeacher(@RequestParam(value="testNo") int testNo) {
+	public String questionByTeacher(Model model
+									, @RequestParam(value="testNo") int testNo) {
+		
 		log.debug(testNo + "<--testNo 디버깅");
 		
+		// 문제 출력 메서드
+		List<Map<String, Object>> list = teacherService.getQuestionByTeacher(testNo);
+		List<Map<String, Object>> eList = teacherService.getExampleByTeacher(testNo);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("eList", eList);
+		model.addAttribute("testNo", testNo);
+		
 		return "teacher/questionByTeacher";
+	}
+	
+	// 시험문제 등록 폼
+	@GetMapping("/teacher/addQuestion")
+	public String addQuestion(Model model, @RequestParam(value="testNo") int testNo) {
+		log.debug(testNo + "<--문제추가 회차번호");
+		model.addAttribute("testNo", testNo);
+		return "teacher/addQuestion";
+	}
+	
+	// 시험문제 등록 액션
+	@PostMapping("/teacher/addQuestion")
+	public String addQuestion(Question question, Example example
+								, @RequestParam(value="testNo") int testNo) {
+		// 보기값 여러개
+		List<Example> exampleList = example.getExampleList();
+		log.debug(question + "<-- 시험문제 등록 question 디버깅");
+		log.debug(exampleList + "<-- 시험문제 등록 exampleList 디버깅");
+		
+		int row = teacherService.addQuestion(question, exampleList);
+		
+		return "redirect:/teacher/questionByTeacher?testNo="+testNo;
 	}
 	
 	// 시험회차 삭제
@@ -91,11 +125,6 @@ public class TeacherController {
 									, @RequestParam(value="currentPage", defaultValue = "1") int currentPage
 									, @RequestParam(value="rowPerPage", defaultValue = "10") int rowPerPage
 									, @RequestParam(value="searchWord", defaultValue = "") String searchWord) {
-		// 오늘 날짜 뽑기
-		Calendar today = Calendar.getInstance();
-		int year = today.get(Calendar.YEAR);
-		int month = today.get(Calendar.MONTH) + 1;
-		int date = today.get(Calendar.DATE);
 		
 		// 메서드 호출
 		List<Map<String, Object>> list = teacherService.getTestListByTeacher(currentPage, rowPerPage, searchWord);
@@ -110,10 +139,6 @@ public class TeacherController {
 		model.addAttribute("rowPerPage", rowPerPage);
 		model.addAttribute("searchWord", searchWord);
 		model.addAttribute("lastPage", lastPage);
-		model.addAttribute("today", today);
-		model.addAttribute("year", year);
-		model.addAttribute("month", month);
-		model.addAttribute("date", date);
 		
 		return "teacher/testListByTeacher";
 	}

@@ -6,13 +6,25 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import goodee.gdj58.online.vo.Example;
+import goodee.gdj58.online.vo.Question;
 import goodee.gdj58.online.vo.Teacher;
 import goodee.gdj58.online.vo.Test;
 
 @Mapper
 public interface TeacherMapper {
 	
+	// 시험문제 보기 출력
+	List<Map<String, Object>> selectExampleByTeacher(int testNo);
+
 	// 시험문제 출력
+	List<Map<String, Object>> selectQuestionByTeacher(int testNo);
+	
+	// 시험문제 등록
+	int insertQuestion(Question question);
+	
+	// 보기 등록
+	int insertExample(Example example);
 	
 	// 시험회차 삭제
 	int deleteTest(int testNo);

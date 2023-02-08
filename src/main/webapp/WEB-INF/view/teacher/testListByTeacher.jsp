@@ -16,8 +16,6 @@
 		</script>
 	</head>
 	<body>
-		${today}
-		${year}년 ${month}월 ${date}일
 		<a href="${pageContext.request.contextPath}/teacher/teacherLogout">로그아웃</a>
 		<h1>시험회차</h1>
 		<a href="${pageContext.request.contextPath}/teacher/addTest">회차등록</a>

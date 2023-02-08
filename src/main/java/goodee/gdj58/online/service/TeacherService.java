@@ -9,13 +9,33 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import goodee.gdj58.online.mapper.TeacherMapper;
+import goodee.gdj58.online.vo.Example;
+import goodee.gdj58.online.vo.Question;
 import goodee.gdj58.online.vo.Teacher;
 import goodee.gdj58.online.vo.Test;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @Transactional
 public class TeacherService {
 	@Autowired private TeacherMapper teacherMapper;
+	
+	// 시험문제 보기 출력
+	public List<Map<String, Object>> getExampleByTeacher(int testNo) {
+		return teacherMapper.selectExampleByTeacher(testNo);
+	}
+	
+	// 시험문제 출력
+	public List<Map<String, Object>> getQuestionByTeacher(int testNo) {
+		return teacherMapper.selectQuestionByTeacher(testNo);
+	}
+	
+	// 시험문제 등록
+	public int addQuestion(Question question, List<Example> exampleList) {
+		log.debug(exampleList + "<--시험문제 등록 exampleList 서비스에서 디버깅");
+		return teacherMapper.insertQuestion(question);
+	}
 	
 	// 시험회차 삭제
 	public int removeTest(int testNo) {
