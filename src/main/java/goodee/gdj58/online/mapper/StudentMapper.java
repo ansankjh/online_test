@@ -22,6 +22,9 @@ public interface StudentMapper {
 	// 학생 등록
 	int insertStudent(Student student);
 	
+	// 학생 아이디 중복 체크
+	public String selectStudentId(String studentId);
+	
 	// 학생목록수 studentList.jsp
 	int selectStudentCount();
 	

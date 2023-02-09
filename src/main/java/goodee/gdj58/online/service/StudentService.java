@@ -40,6 +40,17 @@ public class StudentService {
 		return studentMapper.insertStudent(student);
 	}
 	
+	// 학생 아이디 중복 체크
+	public String getStudentId(String studentId) {
+		// 사용불가(null이 아님)면 NO
+		String resultStr = "NO";
+		// 사용가능(null)하면 YES를 반환
+		if(studentMapper.selectStudentId(studentId) == null) {
+			resultStr = "YES";
+		}
+		return resultStr;
+	}
+	
 	// 학생 리스트 목록수 studentList.jsp
 	public int getStudentCount() {
 		return studentMapper.selectStudentCount();

@@ -6,33 +6,72 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>addTacher</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				// 아이디 중복검사
+				$('#ckBtn').click(function() {
+					$.ajax({
+						url:'${pageContext.request.contextPath}/teacherIdck'
+						, type:'get'
+						, data:{teacherId:$('#id').val()}
+						, success:function(model) {
+							if(model == 'YES') {
+								// 사용가능한 아이디
+								$('#teacherId').val($('#id').val())
+								$('#teacherPw').focus();
+							} else {
+								alert($('#id').val() + '는 사용중인 아이디입니다.');
+								$('#id').focus();
+							}
+						}
+					});
+				});
+				
+				$('#addBtn').click(function() {
+					if($('#teacherPw').val() == '') {
+						alert('비밀번호를 입력해주세요.');
+						$('#teacherPw').focus();
+					} else if($('#teacherName').val() == '') {
+						alert('이름을 입력해주세요.');
+						$('#teacherName').focus();
+					} else {
+						$('#addForm').submit();
+					}
+				});
+			});
+		</script>
 	</head>
 	<body>
 		<h1>선생님 등록</h1>
 		<div>${msg}</div>
-		<form action="${pageContext.request.contextPath}/employee/addTeacher" method="post">
+		<div>
+			<input type="text" id="id">
+			<button type="button" id="ckBtn">중복검사</button>
+		</div>
+		<form action="${pageContext.request.contextPath}/employee/addTeacher" method="post" id="addForm">
 			<table border="1">
 				<tr>
 					<td>선생님 아이디</td>
 					<td>
-						<input type="text" name="teacherId">
+						<input type="text" name="teacherId" id="teacherId" readonly="readonly">
 					</td>
 				</tr>
 				<tr>
 					<td>선생님 비밀번호</td>
 					<td>
-						<input type="password" name="teacherPw">
+						<input type="password" name="teacherPw" id="teacherPw">
 					</td>
 				</tr>
 				<tr>
 					<td>선생님 이름</td>
 					<td>
-						<input type="text" name="teacherName">
+						<input type="text" name="teacherName" id="teacherName">
 					</td>
 				</tr>
 			</table>
 			<div>
-				<button type="submit">등록</button>
+				<button type="button" id="addBtn">등록</button>
 			</div>
 		</form>
 	</body>

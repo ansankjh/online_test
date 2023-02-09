@@ -26,6 +26,12 @@ public interface TeacherMapper {
 	// 보기 등록
 	int insertExample(Example example);
 	
+	// 문제 개수
+	int selectQuestionCount(int testNo);
+	
+	// 보기 개수
+	int selectExampleCount(int questionNo);
+	
 	// 시험회차 삭제
 	int deleteTest(int testNo);
 	
@@ -56,6 +62,9 @@ public interface TeacherMapper {
 	// 선생님 등록
 	int insertTeacher(Teacher teacher);
 
+	// 선생님 아이디 중복체크
+	public String selectTeacherId(String teacherId);
+	
 	// 선생님 목록수
 	int selectTeacherCount();
 	

@@ -33,8 +33,28 @@ public class TeacherService {
 	
 	// 시험문제 등록
 	public int addQuestion(Question question, List<Example> exampleList) {
-		log.debug(exampleList + "<--시험문제 등록 exampleList 서비스에서 디버깅");
-		return teacherMapper.insertQuestion(question);
+		log.debug(exampleList + "<-- 서비스단에서 보기리스트 디버깅");
+		
+		// 문제 추가
+		int row = teacherMapper.insertQuestion(question);
+		// Mapper에서 문제 추가되면 question 기본키 가져오기
+		int questionNo = question.getQuestionNo();
+		
+		for(Example e : exampleList) {
+			e.setQuestionNo(questionNo);
+			row = row + teacherMapper.insertExample(e);
+		}
+		
+		return row;
+	}
+	// 문제 개수 출력
+	public int getQuestionCount(int testNo) {
+		return teacherMapper.selectQuestionCount(testNo);
+	}
+	
+	// 보기 개수 출력
+	public int getExampleCount(int questionNo) {
+		return teacherMapper.selectExampleCount(questionNo);
 	}
 	
 	// 시험회차 삭제
@@ -95,6 +115,17 @@ public class TeacherService {
 	// 선생님 등록
 	public int addTeacher(Teacher teacher) {
 		return teacherMapper.insertTeacher(teacher);
+	}
+	
+	// 선생님 아이디 중복체크
+	public String getTeacherId(String teacherId) {
+		// 아이디가 중복이면 NO
+		String resultStr = "NO";
+		// 아이디 사용가능하면 YES
+		if(teacherMapper.selectTeacherId(teacherId) == null) {
+			resultStr = "YES";
+		}
+		return resultStr;
 	}
 	
 	// 선생님 목록수

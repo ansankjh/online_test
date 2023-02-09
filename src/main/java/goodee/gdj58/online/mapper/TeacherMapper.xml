@@ -28,16 +28,17 @@
 	</select>
 	
 	<!-- 시험문제 등록 -->
-	<insert id="insertQuestion" parameterType="goodee.gdj58.online.vo.Question">
+	<insert id="insertQuestion" useGeneratedKeys="true" keyProperty="questionNo" parameterType="goodee.gdj58.online.vo.Question">
 		INSERT INTO question(
 			test_no
 			, question_idx
 			, question_title
-		) VALUES(
+		) VALUES (
 			#{testNo}
 			, #{questionIdx}
 			, #{questionTitle}
-		)
+		) 
+		
 	</insert>
 	
 	<!-- 보기 등록 -->
@@ -47,13 +48,29 @@
 			, example_idx
 			, example_title
 			, example_ox
-		) VALUES(
+		) VALUES (
 			#{questionNo}
 			, #{exampleIdx}
 			, #{exampleTitle}
 			, #{exampleOx}
 		)
 	</insert>
+	
+	<!-- 문제 개수 -->
+	<select id="selectQuestionCount" parameterType="int" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM question
+		WHERE test_no=#{testNo}
+	</select>
+		
+	<!-- 보기 개수 -->
+	<select id="selectExampleCount">
+		SELECT
+			COUNT(*)
+		FROM example
+		WHERE question_no=#{questionNo}
+	</select>
 	
 	<!-- 시험회차 삭제 -->
 	<delete id="deleteTest" parameterType="int">
@@ -151,6 +168,14 @@
 		)
 	</insert>
 	
+	<!-- 선생님 아이디 중복체크 -->
+	<select id="selectTeacherId" parameterType="string" resultType="string">
+		SELECT
+			teacher_id teacherId
+		FROM teacher
+		WHERE teacher_id = #{teacherId}
+	</select>
+		
 	<!-- 선생님 목록수 -->
 	<select id="selectTeacherCount"
 				resultType="java.lang.Integer">

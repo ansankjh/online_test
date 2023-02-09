@@ -8,15 +8,18 @@
 	</head>
 	<body>
 		<h1>시험문제</h1>
-		<a href="${pageContext.request.contextPath}/teacher/addQuestion?testNo=${testNo}">문제추가</a>
+		<c:if test="${questionCnt != 10}">
+			<a href="${pageContext.request.contextPath}/teacher/addQuestion?testNo=${testNo}">문제추가</a>
+		</c:if>
+		
 		<div>
+			<br>
 			<c:forEach var="q" items="${list}">
 				<div>
 					${q.questionIdx}. ${q.questionTitle}
 					<a href="${pageContext.request.contextPath}/teacher/modifyQuestion?question=${q.questionNo}">문제수정</a>
 					<a href="${pageContext.request.contextPath}/teacher/removeQuestion?question=${q.questionNo}">문제삭제</a>
 				</div>
-				<br>
 				<div>
 					<c:forEach var="e" items="${eList}">
 						<c:if test="${q.questionNo == e.questionNo}">
@@ -27,6 +30,7 @@
 							</div>
 						</c:if>
 					</c:forEach>
+					<br>
 				</div>
 			</c:forEach>
 		</div>

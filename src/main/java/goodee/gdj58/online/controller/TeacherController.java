@@ -38,9 +38,11 @@ public class TeacherController {
 		// 문제 출력 메서드
 		List<Map<String, Object>> list = teacherService.getQuestionByTeacher(testNo);
 		List<Map<String, Object>> eList = teacherService.getExampleByTeacher(testNo);
-		
+		// 문제 개수 출력
+		int questionCnt = teacherService.getQuestionCount(testNo);
 		model.addAttribute("list", list);
 		model.addAttribute("eList", eList);
+		model.addAttribute("questionCnt", questionCnt);
 		model.addAttribute("testNo", testNo);
 		
 		return "teacher/questionByTeacher";
@@ -49,21 +51,26 @@ public class TeacherController {
 	// 시험문제 등록 폼
 	@GetMapping("/teacher/addQuestion")
 	public String addQuestion(Model model, @RequestParam(value="testNo") int testNo) {
-		log.debug(testNo + "<--문제추가 회차번호");
+		log.debug(testNo + "<-- 문제추가페이지에서 testNo 디버깅");
 		model.addAttribute("testNo", testNo);
 		return "teacher/addQuestion";
 	}
-	
 	// 시험문제 등록 액션
 	@PostMapping("/teacher/addQuestion")
-	public String addQuestion(Question question, Example example
+	public String addQuestion(Model model, Question question, Example example
 								, @RequestParam(value="testNo") int testNo) {
 		// 보기값 여러개
 		List<Example> exampleList = example.getExampleList();
-		log.debug(question + "<-- 시험문제 등록 question 디버깅");
-		log.debug(exampleList + "<-- 시험문제 등록 exampleList 디버깅");
 		
 		int row = teacherService.addQuestion(question, exampleList);
+		// row 출력
+		log.debug(row + "<-- 문제 추가 성공시 row가 몇이 나오는지 확인");
+		// 5가 아니면 실패 원래 값들 다시 입력되게금
+		if(row != 5) {
+			model.addAttribute("msg", "문제 등록에 실패했습니다.");
+			model.addAttribute("q", question);
+			return "teacher/addQuestion";
+		}
 		
 		return "redirect:/teacher/questionByTeacher?testNo="+testNo;
 	}

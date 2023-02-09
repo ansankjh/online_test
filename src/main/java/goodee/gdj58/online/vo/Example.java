@@ -10,7 +10,7 @@ public class Example {
 	private int questionNo;
 	private int exampleIdx;
 	private String exampleTitle;
-	private String ox;
+	private String exampleOx;
 	
 	// 보기 여러개 받기 위한 list
 	private List<Example> exampleList;

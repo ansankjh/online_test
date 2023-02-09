@@ -40,6 +40,16 @@ public class EmployeeService {
 	public int addEmployee(Employee employee) {
 		return employeeMapper.insertEmployee(employee);
 	}
+	
+	// 사원아이디 중복체크
+	public String getEmployeeId(String empId) {
+		// 사용가능한 ID면 "YES" 아니면 "NO"반환
+		String resultStr = "NO";
+		if(employeeMapper.selectEmployeeId(empId) == null) {
+			resultStr = "YES";
+		}
+		return resultStr;
+	}
 	// 사원목록수
 	public int getEmployeeCount(String searchWord) {
 		return employeeMapper.selectEmployeeCount(searchWord);

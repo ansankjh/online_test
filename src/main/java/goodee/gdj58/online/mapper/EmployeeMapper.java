@@ -22,6 +22,9 @@ public interface EmployeeMapper {
 	// 사원등록
 	int insertEmployee(Employee employee);
 	
+	// 사원 아이디 중복 방지
+	public String selectEmployeeId(String empId);
+	
 	// empList 목록의 수 출력
 	int selectEmployeeCount(String searchWord);
 	

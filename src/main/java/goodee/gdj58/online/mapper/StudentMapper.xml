@@ -37,12 +37,21 @@
 			, PASSWORD(#{studentPw})
 			, #{studentName}
 		)
-		
 	</insert>
+	
+	<!-- 학생 아이디 중복체크 -->
+	<select id="selectStudentId" parameterType="string" resultType="string">
+		SELECT
+			student_id studentId
+		FROM student
+		WHERE student_id = #{studentId}
+	</select>
+	
 	<!-- 학생 목록 수 -->
 	<select id="selectStudentCount" resultType="Integer">
 		SELECT COUNT(*) FROM student;
 	</select>
+	
 	<!-- 학생 목록 -->
 	<select id="selectStudentList"
 				resultType="goodee.gdj58.online.vo.Student"
