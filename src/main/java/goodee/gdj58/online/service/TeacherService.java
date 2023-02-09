@@ -21,6 +21,18 @@ import lombok.extern.slf4j.Slf4j;
 public class TeacherService {
 	@Autowired private TeacherMapper teacherMapper;
 	
+	//시험 문제 수정
+
+	// 시험문제 수정 폼- 보기
+	public List<Example> getExampleByModify(int questionNo) {
+		return teacherMapper.selectExampleByModify(questionNo);
+	}
+	
+	// 시험문제 수정 폼 - 문제
+	public Question getQuestionByModify(int questionNo) {
+		return teacherMapper.selectQuestionByModify(questionNo);
+	}
+	
 	// 시험문제 보기 출력
 	public List<Map<String, Object>> getExampleByTeacher(int testNo) {
 		return teacherMapper.selectExampleByTeacher(testNo);
@@ -91,7 +103,7 @@ public class TeacherService {
 		paramMap.put("searchWord", searchWord);
 		return teacherMapper.selectTestListByTeacher(paramMap);
 	}
-	
+	/*--------------------------------선생님-------------------------------------------*/
 	
 	// 비밀번호 수정 
 	public int updateTeacherPw(int teacherNo, String oldPw, String newPw) {

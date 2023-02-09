@@ -17,8 +17,8 @@
 			<c:forEach var="q" items="${list}">
 				<div>
 					${q.questionIdx}. ${q.questionTitle}
-					<a href="${pageContext.request.contextPath}/teacher/modifyQuestion?question=${q.questionNo}">문제수정</a>
-					<a href="${pageContext.request.contextPath}/teacher/removeQuestion?question=${q.questionNo}">문제삭제</a>
+					<a href="${pageContext.request.contextPath}/teacher/modifyQuestion?questionNo=${q.questionNo}">문제수정</a>
+					<a href="${pageContext.request.contextPath}/teacher/removeQuestion?questionNo=${q.questionNo}">문제삭제</a>
 				</div>
 				<div>
 					<c:forEach var="e" items="${eList}">
@@ -26,7 +26,6 @@
 							<div>
 								[${e.exampleIdx}]. ${e.exampleTitle}
 								<a href="${pageContext.request.contextPath}/teacher/modifyExample?exampleNo=${e.exampleNo}">수정</a>
-								<a href="${pageContext.request.contextPath}/teacher/removeExample?exampleNo=${e.exampleNo}">삭제</a>
 							</div>
 						</c:if>
 					</c:forEach>

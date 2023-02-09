@@ -14,6 +14,14 @@ import goodee.gdj58.online.vo.Test;
 @Mapper
 public interface TeacherMapper {
 	
+	// 시험문제 수정 액션
+	
+	// 시험문제 수정 폼-보기
+	List<Example> selectExampleByModify(int questionNo);
+	
+	// 시험문제 수정 폼-문제
+	Question selectQuestionByModify(int questionNo);
+	
 	// 시험문제 보기 출력
 	List<Map<String, Object>> selectExampleByTeacher(int testNo);
 

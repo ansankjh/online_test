@@ -27,6 +27,21 @@ public class TeacherController {
 	@Autowired TeacherService teacherService;
 	@Autowired IdService idService;
 	
+	// 시험문제 수정 폼
+	@GetMapping("/teacher/modifyQuestion")
+	public String modifyQuestion(Model model, Question question
+									, @RequestParam(value="questionNo") int questionNo) {
+		log.debug(questionNo + "<-- 문제수정페이지에서 문제 번호 디버깅");
+		
+		Question q = teacherService.getQuestionByModify(questionNo);
+		List<Example> e = teacherService.getExampleByModify(questionNo);
+		
+		log.debug(q + "<-- 문제번호와 문제내용 출력 디버깅");
+		
+		model.addAttribute("q", q);
+		model.addAttribute("e", e);
+		return "teacher/modifyQuestion";
+	}
 	
 	// 시험문제 출력
 	@GetMapping("/teacher/questionByTeacher")
@@ -149,6 +164,8 @@ public class TeacherController {
 		
 		return "teacher/testListByTeacher";
 	}
+	
+	/*--------------------------------------------선생님-----------------------------------------*/
 	
 	// 비밀번호 수정 폼
 	@GetMapping("/teacher/modifyTeacherPw")
