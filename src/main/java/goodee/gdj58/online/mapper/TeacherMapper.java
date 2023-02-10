@@ -1,6 +1,6 @@
 package goodee.gdj58.online.mapper;
 
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -14,42 +14,34 @@ import goodee.gdj58.online.vo.Test;
 @Mapper
 public interface TeacherMapper {
 	
-	// 시험문제 수정 액션
-	
-	// 시험문제 수정 폼-보기
-	List<Example> selectExampleByModify(int questionNo);
-	
-	// 시험문제 수정 폼-문제
-	Question selectQuestionByModify(int questionNo);
-	
-	// 시험문제 보기 출력
-	List<Map<String, Object>> selectExampleByTeacher(int testNo);
-
-	// 시험문제 출력
-	List<Map<String, Object>> selectQuestionByTeacher(int testNo);
-	
-	// 시험문제 등록
-	int insertQuestion(Question question);
-	
-	// 보기 등록
+	// 보기등록
 	int insertExample(Example example);
 	
-	// 문제 개수
-	int selectQuestionCount(int testNo);
+	// 보기목록
+	List<Map<String, Object>> selectExampleList(int questionNo);
 	
-	// 보기 개수
-	int selectExampleCount(int questionNo);
+	// 보기 페이지에 questionTitle
+	Question selectQuestion(int questionNo);
 	
-	// 시험회차 삭제
-	int deleteTest(int testNo);
+	// 문제삭제
+	int deleteQuestion(int questionNo);
 	
-	// 시험회차 수정을 위한 조회
-	HashMap<String, Object> selectTestByUpdate(int testNo);
+	// test
+	Test selectTest(int testNo);
 	
-	// 시험회차 수정
+	// 문제등록
+	int insertQuestion(Question question);
+	
+	// 문제목록
+	List<Question> selectQuestionList(int testNo);
+	
+	// 시험회차 수정 modifyTest
 	int updateTest(Test test);
 	
-	// 시험회차 등록
+	// 시험회차 삭제 removeTest
+	int deleteTest(int testNo);
+	
+	// 시험회차 등록 addTest
 	int insertTest(Test test);
 	
 	// 시험회차 목록수

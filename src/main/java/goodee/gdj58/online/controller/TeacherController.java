@@ -1,6 +1,6 @@
 package goodee.gdj58.online.controller;
 
-import java.util.HashMap;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -27,127 +27,124 @@ public class TeacherController {
 	@Autowired TeacherService teacherService;
 	@Autowired IdService idService;
 	
-	// 시험문제 수정 폼
-	@GetMapping("/teacher/modifyQuestion")
-	public String modifyQuestion(Model model, Question question
-									, @RequestParam(value="questionNo") int questionNo) {
-		log.debug(questionNo + "<-- 문제수정페이지에서 문제 번호 디버깅");
+	// 보기등록
+	@PostMapping("/teacher/addExample")
+	public String addExample(Example example
+								, @RequestParam(value="questionNo") int questionNo) {
+		teacherService.addExample(example);
 		
-		Question q = teacherService.getQuestionByModify(questionNo);
-		List<Example> e = teacherService.getExampleByModify(questionNo);
-		
-		log.debug(q + "<-- 문제번호와 문제내용 출력 디버깅");
-		
-		model.addAttribute("q", q);
-		model.addAttribute("e", e);
-		return "teacher/modifyQuestion";
+		return "redirect:/teacher/exampleList?questionNo="+questionNo;
 	}
 	
-	// 시험문제 출력
-	@GetMapping("/teacher/questionByTeacher")
-	public String questionByTeacher(Model model
-									, @RequestParam(value="testNo") int testNo) {
+	// 보기목록
+	@GetMapping("/teacher/exampleList")
+	public String exampleList(Model model
+								, @RequestParam(value="questionNo") int questionNo) {
 		
-		log.debug(testNo + "<--testNo 디버깅");
+		List<Map<String, Object>> list = teacherService.getExampleList(questionNo);
+		Question question = teacherService.getQuestion(questionNo);
 		
-		// 문제 출력 메서드
-		List<Map<String, Object>> list = teacherService.getQuestionByTeacher(testNo);
-		List<Map<String, Object>> eList = teacherService.getExampleByTeacher(testNo);
-		// 문제 개수 출력
-		int questionCnt = teacherService.getQuestionCount(testNo);
-		model.addAttribute("list", list);
-		model.addAttribute("eList", eList);
-		model.addAttribute("questionCnt", questionCnt);
-		model.addAttribute("testNo", testNo);
-		
-		return "teacher/questionByTeacher";
-	}
-	
-	// 시험문제 등록 폼
-	@GetMapping("/teacher/addQuestion")
-	public String addQuestion(Model model, @RequestParam(value="testNo") int testNo) {
-		log.debug(testNo + "<-- 문제추가페이지에서 testNo 디버깅");
-		model.addAttribute("testNo", testNo);
-		return "teacher/addQuestion";
-	}
-	// 시험문제 등록 액션
-	@PostMapping("/teacher/addQuestion")
-	public String addQuestion(Model model, Question question, Example example
-								, @RequestParam(value="testNo") int testNo) {
-		// 보기값 여러개
-		List<Example> exampleList = example.getExampleList();
-		
-		int row = teacherService.addQuestion(question, exampleList);
-		// row 출력
-		log.debug(row + "<-- 문제 추가 성공시 row가 몇이 나오는지 확인");
-		// 5가 아니면 실패 원래 값들 다시 입력되게금
-		if(row != 5) {
-			model.addAttribute("msg", "문제 등록에 실패했습니다.");
-			model.addAttribute("q", question);
-			return "teacher/addQuestion";
+		int idx = 1;
+		for(Map<String, Object> e : list) {
+			idx = idx + 1;
+			if(idx > 4) {
+				idx=4;
+			}
 		}
 		
-		return "redirect:/teacher/questionByTeacher?testNo="+testNo;
+		model.addAttribute("list", list);
+		model.addAttribute("q", question);
+		model.addAttribute("questionNo", questionNo);
+		model.addAttribute("idx", idx);
+		
+		return "teacher/exampleList";
+	}
+	
+	// 문제삭제
+	@GetMapping("/teacher/removeQuestion")
+	public String removeQuestion(int questionNo
+									, @RequestParam(value="testNo") int testNo) {
+		teacherService.removeQuestion(questionNo);
+		return "redirect:/teacher/questionList?testNo="+testNo;
+	}
+	
+	// 문제등록
+	@PostMapping("/teacher/addQuestion")
+	public String addQuestion(Question question
+								, @RequestParam(value = "testNo") int testNo) {
+		// 문제등록 메서드
+		teacherService.addQuestion(question);
+	
+		return "redirect:/teacher/questionList?testNo="+testNo;
+	}
+	
+	// 문제페이지
+	@GetMapping("/teacher/questionList")
+	public String selectQuestionList(Model model
+										, @RequestParam(value="testNo") int testNo) {
+		
+		List<Question> list = teacherService.getQuestionList(testNo);
+		Test test = teacherService.getTest(testNo);
+		int questionIdx = 1;
+		for(Question q : list) {
+			questionIdx = questionIdx + 1;
+		}
+		
+		model.addAttribute("list", list);
+		model.addAttribute("test", test);
+		model.addAttribute("testNo", testNo);
+		model.addAttribute("questionIdx", questionIdx);
+		
+		
+		return "teacher/questionList";
+	}
+	
+	// 시험회차 수정
+	@PostMapping("/teacher/modifyTest")
+	public String modifyTest(Test test) {
+		// 회차 수정 메서드
+		int row = teacherService.modifyTest(test);
+		// 성공
+		return "redirect:/teacher/testList";
 	}
 	
 	// 시험회차 삭제
 	@GetMapping("/teacher/removeTest")
-	public String removeTest(@RequestParam(value="testNo") int testNo) {
-		// testNo 디버깅
-		log.debug(testNo + "<-- 삭제에 필요한 testNo");
+	public String removeTest(Model model, int testNo) {
+		// 회차 삭제 메서드
+		teacherService.removeTest(testNo);
 		
-		int row = teacherService.removeTest(testNo);
-		
-		return "redirect:/teacher/testListByTeacher";
+		return "redirect:/teacher/testList";
 	}
 	
-	// 시험회차 수정 폼
-	@GetMapping("/teacher/modifyTest")
-	public String modifyTest(Model model
-								, @RequestParam(value="testNo") int testNo) {
-		
-		// testNo 디버깅
-		log.debug(testNo + "<--testNo");
-		
-		HashMap<String, Object> test = teacherService.getTestByUpdate(testNo);
-		
-		model.addAttribute("test", test);
-		
-		return "teacher/modifyTest";
-	}
-	
-	// 시험회차 수정 액션
-	@PostMapping("/teacher/modifyTest")
-	public String modifyTest(Test test) {
-		// 수정 메서드 호출
-		int row = teacherService.modifyTest(test);
-		return "redirect:/teacher/testListByTeacher";
-	}
-	
-	// 시험회차 등록
-	@GetMapping("/teacher/addTest")
-	public String addTest(HttpSession session) {
-		if(session.getAttribute("loginTeacher") != null) {
-			Teacher loginTeacher = (Teacher)session.getAttribute("loginTeacher");
-			session.setAttribute("loginTeacher", loginTeacher);
-		}
-		return "teacher/addTest";
-	}
-	
+	// 시험회차 등록 액션
 	@PostMapping("/teacher/addTest")
-	public String addTest(Test test, HttpSession session) {
-		// 회차등록 메서드 호출
+	public String addTest(Model model, Test test) {
+		// 회차추가 메서드
 		int row = teacherService.addTest(test);
-		return "redirect:/teacher/testListByTeacher";
+		if(row == 0) {
+			model.addAttribute("msg", "회차추가 실패");
+			return "teacher/testList";
+		}
+		return "redirect:/teacher/testList";
 	}
 	
 	// 시험회차 목록
-	@GetMapping("/teacher/testListByTeacher")
-	public String testListByTeacher(Model model
+	@GetMapping("/teacher/testList")
+	public String testListByTeacher(Model model, HttpSession session
 									, @RequestParam(value="currentPage", defaultValue = "1") int currentPage
 									, @RequestParam(value="rowPerPage", defaultValue = "10") int rowPerPage
 									, @RequestParam(value="searchWord", defaultValue = "") String searchWord) {
 		
+		Teacher loginTeacher = (Teacher)session.getAttribute("loginTeacher");
+		session.setAttribute("loginTeacher", loginTeacher);
+		
+		// 오늘 날짜 출력
+		Calendar day = Calendar.getInstance();
+		int year = day.get(Calendar.YEAR);
+		int month = day.get(Calendar.MONTH)+1;
+		int date = day.get(Calendar.DATE);
+		String today = year+"-"+month+"-"+date;
 		// 메서드 호출
 		List<Map<String, Object>> list = teacherService.getTestListByTeacher(currentPage, rowPerPage, searchWord);
 		int count = teacherService.getTestCountByTeacher(searchWord);
@@ -161,8 +158,9 @@ public class TeacherController {
 		model.addAttribute("rowPerPage", rowPerPage);
 		model.addAttribute("searchWord", searchWord);
 		model.addAttribute("lastPage", lastPage);
+		model.addAttribute("today", today);
 		
-		return "teacher/testListByTeacher";
+		return "teacher/testList";
 	}
 	
 	/*--------------------------------------------선생님-----------------------------------------*/
@@ -197,7 +195,7 @@ public class TeacherController {
 	public String loginTeacher(HttpSession session, Teacher teacher) {
 		Teacher resultTeacher = teacherService.loginTeacher(teacher);
 		session.setAttribute("loginTeacher", resultTeacher);
-		return "redirect:/teacher/testListByTeacher";
+		return "redirect:/teacher/testList";
 	}
 	
 	// 선생님 로그아웃

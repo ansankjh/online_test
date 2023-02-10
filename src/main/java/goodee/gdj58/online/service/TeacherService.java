@@ -21,67 +21,49 @@ import lombok.extern.slf4j.Slf4j;
 public class TeacherService {
 	@Autowired private TeacherMapper teacherMapper;
 	
-	//시험 문제 수정
-
-	// 시험문제 수정 폼- 보기
-	public List<Example> getExampleByModify(int questionNo) {
-		return teacherMapper.selectExampleByModify(questionNo);
+	// 보기등록
+	public int addExample(Example example) {
+		return teacherMapper.insertExample(example);
 	}
 	
-	// 시험문제 수정 폼 - 문제
-	public Question getQuestionByModify(int questionNo) {
-		return teacherMapper.selectQuestionByModify(questionNo);
+	// 보기목록
+	public List<Map<String, Object>> getExampleList(int questionNo) {
+		return teacherMapper.selectExampleList(questionNo);
 	}
 	
-	// 시험문제 보기 출력
-	public List<Map<String, Object>> getExampleByTeacher(int testNo) {
-		return teacherMapper.selectExampleByTeacher(testNo);
+	// 보기페이지에 questionTitle
+	public Question getQuestion(int questionNo) {
+		return teacherMapper.selectQuestion(questionNo);
 	}
 	
-	// 시험문제 출력
-	public List<Map<String, Object>> getQuestionByTeacher(int testNo) {
-		return teacherMapper.selectQuestionByTeacher(testNo);
+	// 문제삭제
+	public int removeQuestion(int questionNo) {
+		return teacherMapper.deleteQuestion(questionNo);
 	}
 	
-	// 시험문제 등록
-	public int addQuestion(Question question, List<Example> exampleList) {
-		log.debug(exampleList + "<-- 서비스단에서 보기리스트 디버깅");
-		
-		// 문제 추가
-		int row = teacherMapper.insertQuestion(question);
-		// Mapper에서 문제 추가되면 question 기본키 가져오기
-		int questionNo = question.getQuestionNo();
-		
-		for(Example e : exampleList) {
-			e.setQuestionNo(questionNo);
-			row = row + teacherMapper.insertExample(e);
-		}
-		
-		return row;
-	}
-	// 문제 개수 출력
-	public int getQuestionCount(int testNo) {
-		return teacherMapper.selectQuestionCount(testNo);
+	// test
+	public Test getTest(int testNo) {
+		return teacherMapper.selectTest(testNo);
 	}
 	
-	// 보기 개수 출력
-	public int getExampleCount(int questionNo) {
-		return teacherMapper.selectExampleCount(questionNo);
+	// 문제등록
+	public int addQuestion(Question question) {
+		return teacherMapper.insertQuestion(question);
 	}
 	
-	// 시험회차 삭제
-	public int removeTest(int testNo) {
-		return teacherMapper.deleteTest(testNo);
-	}
-	
-	// 시험회차 수정을 위한 조회
-	public HashMap<String, Object> getTestByUpdate(int testNo) {
-		return teacherMapper.selectTestByUpdate(testNo);
+	// 시험회차목록
+	public List<Question> getQuestionList(int testNo) {
+		return teacherMapper.selectQuestionList(testNo);
 	}
 	
 	// 시험회차 수정
 	public int modifyTest(Test test) {
 		return teacherMapper.updateTest(test);
+	}
+	
+	// 시험회차 삭제
+	public int removeTest(int testNo) {
+		return teacherMapper.deleteTest(testNo);
 	}
 	
 	// 시험회차 등록
