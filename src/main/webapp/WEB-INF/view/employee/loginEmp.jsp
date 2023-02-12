@@ -15,13 +15,13 @@
 					<tr>
 						<td>사원아이디</td>
 						<td>
-							<input type="text" name="empId">
+							<input type="text" name="empId" value="employee">
 						</td>
 					</tr>
 					<tr>
 						<td>사원비밀번호</td>
 						<td>
-							<input type="password" name="empPw">
+							<input type="password" name="empPw" value="123">
 						</td>
 					</tr>
 				</table>

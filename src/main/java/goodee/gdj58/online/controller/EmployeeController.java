@@ -179,7 +179,7 @@ public class EmployeeController {
 	@GetMapping("/employee/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/employee/loginEmp";
+		return "redirect:/login";
 	}
 	
 	/*

@@ -21,6 +21,26 @@ import lombok.extern.slf4j.Slf4j;
 public class TeacherService {
 	@Autowired private TeacherMapper teacherMapper;
 	
+	// 보기수정폼
+	public Example selectExampleByModify(int exampleNo) {
+		return teacherMapper.selectExampleByModify(exampleNo);
+	}
+	
+	// 문제수정
+	public int modifyQuestion(Question question) {
+		return teacherMapper.updateQuestion(question);
+	}
+	
+	// 보기삭제
+	public int removeExample(int exampleNo) {
+		return teacherMapper.deleteExample(exampleNo);
+	}
+	
+	// 보기수정
+	public int modifyExample(Example example) {
+		return teacherMapper.updateExample(example);
+	}
+	
 	// 보기등록
 	public int addExample(Example example) {
 		return teacherMapper.insertExample(example);

@@ -77,30 +77,22 @@
 			<a href="${pageContext.request.contextPath}/teacher/testList?currentPage=${currentPage+1}">다음</a>
 		</c:if>
 		<!-- 시험회차 추가 -->
+		<h3>회차추가</h3>
 		<form action="${pageContext.request.contextPath}/teacher/addTest" method="post">
+			<input type="hidden" name="teacherNo" value="${loginTeacher.teacherNo}">
 			<table border="1">
 				<tr>
-					<td>testTitle</td>
 					<td>
 						<input type="text" name="testTitle">
 					</td>
-				</tr>
-				<tr>
-					<td>testDate</td>
 					<td>
 						${today}
 					</td>
-				</tr>
-				<tr>
-					<td>teacherNo</td>
 					<td>
-						<input type="number" name="teacherNo" value="${loginTeacher.teacherNo}" readonly="readonly">
+						<button type="submit">등록</button>
 					</td>
 				</tr>
 			</table>
-			<div>
-				<button type="submit">회차등록</button>
-			</div>
 		</form>
 	</body>
 </html>

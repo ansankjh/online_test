@@ -2,6 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="goodee.gdj58.online.mapper.TeacherMapper">
 	
+	<!-- 보기수정폼 -->
+	<select id="selectExampleByModify" parameterType="int" resultType="goodee.gdj58.online.vo.Example">
+		SELECT 
+			example_no exampleNo
+			, question_no questionNo
+			, example_idx exampleIdx
+			, example_title exampleTitle
+			, example_ox exampleOx
+		FROM example
+		WHERE example_no = #{exampleNo}
+	</select>
+	
+	<!-- 문제수정 -->
+	<update id="updateQuestion" parameterType="goodee.gdj58.online.vo.Question">
+		UPDATE question SET question_title = #{questionTitle} WHERE question_no=#{questionNo}
+	</update>
+	
+	<!-- 보기삭제 -->
+	<delete id="deleteExample" parameterType="int">
+		DELETE FROM example WHERE example_no=#{exampleNo}
+	</delete>
+	
+	<!-- 보기수정 -->
+	<update id="updateExample" parameterType="goodee.gdj58.online.vo.Example">
+		UPDATE example SET 
+			example_title = #{exampleTitle}, example_ox = #{exampleOx} 
+		WHERE example_no=#{exampleNo} AND question_no=#{questionNo}
+	</update>
+	
 	<!-- 보기등록 -->
 	<insert id="insertExample" parameterType="goodee.gdj58.online.vo.Example">
 		INSERT INTO example(
@@ -49,7 +78,7 @@
 		SELECT
 			test_no testNo
 			, test_title testTitle
-			, test_date tesaDate
+			, test_date testDate
 			, teacher_No teacherNo
 		FROM test
 		WHERE test_no = #{testNo}

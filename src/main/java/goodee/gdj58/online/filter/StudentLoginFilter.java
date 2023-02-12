@@ -29,7 +29,7 @@ public class StudentLoginFilter implements Filter {
 			HttpServletResponse rep = (HttpServletResponse)response;
 			HttpSession session = req.getSession();
 			if(session.getAttribute("loginStudent") == null) {
-				rep.sendRedirect(req.getContextPath() + "/loginStudent");
+				rep.sendRedirect(req.getContextPath() + "/login");
 				return;
 			}
 		} else {

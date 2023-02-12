@@ -27,6 +27,51 @@ public class TeacherController {
 	@Autowired TeacherService teacherService;
 	@Autowired IdService idService;
 	
+	// 문제수정
+	@PostMapping("/teacher/modifyQuestion")
+	public String modifyQuestion(Question question
+									, @RequestParam(value="questionNo") int questionNo) {
+		//System.out.println(questionNo + "<--문제수정 문제번호");
+		
+		// 문제수정 메서드 호출
+		teacherService.modifyQuestion(question);
+		
+		return "redirect:/teacher/exampleList?questionNo="+questionNo;
+	}
+	
+	// 보기삭제
+	@GetMapping("/teacher/removeExample")
+	public String removeExample(@RequestParam(value="exampleNo") int exampleNo
+									, @RequestParam(value="questionNo") int questionNo) {
+		
+		/*
+		System.out.println(exampleNo + "<--보기삭제 보기번호");
+		System.out.println(questionNo + "<--보기삭제 문제번호");
+		*/
+		
+		teacherService.removeExample(exampleNo);
+		
+		return "redirect:/teacher/exampleList?questionNo="+questionNo;
+	}
+	
+	// 보기수정
+	@PostMapping("/teacher/modifyExample")
+	public String modifyExample(Example example
+									, @RequestParam(value="questionNo") int questionNo
+									, @RequestParam(value="exampleNo") int exampleNo) {
+		/*
+		System.out.println(questionNo + "<-- 보기수정 문제번호");
+		System.out.println(exampleNo + "<-- 보기수정 보기번호");
+		log.debug(example.getExampleTitle() +  "<-- 보기수정 보기내용");
+		log.debug(example.getExampleOx() + "<-- 보기수정 정답체크");
+		*/
+		
+		// 수정 메서드 호출
+		teacherService.modifyExample(example);
+		
+		return "redirect:/teacher/exampleList?questionNo="+questionNo;
+	}
+	
 	// 보기등록
 	@PostMapping("/teacher/addExample")
 	public String addExample(Example example
@@ -47,9 +92,6 @@ public class TeacherController {
 		int idx = 1;
 		for(Map<String, Object> e : list) {
 			idx = idx + 1;
-			if(idx > 4) {
-				idx=4;
-			}
 		}
 		
 		model.addAttribute("list", list);
@@ -103,7 +145,7 @@ public class TeacherController {
 	@PostMapping("/teacher/modifyTest")
 	public String modifyTest(Test test) {
 		// 회차 수정 메서드
-		int row = teacherService.modifyTest(test);
+		teacherService.modifyTest(test);
 		// 성공
 		return "redirect:/teacher/testList";
 	}
@@ -202,6 +244,6 @@ public class TeacherController {
 	@GetMapping("/teacher/teacherLogout")
 	public String teacherLogout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/loginTeacher";
+		return "redirect:/login";
 	}
 }

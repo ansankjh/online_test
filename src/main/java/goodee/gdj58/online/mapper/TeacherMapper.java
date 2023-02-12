@@ -14,6 +14,18 @@ import goodee.gdj58.online.vo.Test;
 @Mapper
 public interface TeacherMapper {
 	
+	// 문제수정
+	int updateQuestion(Question question);
+	
+	// 보기삭제
+	int deleteExample(int exampleNo);
+	
+	// 보기수정
+	int updateExample(Example example);
+	
+	// 보기수정조회
+	Example selectExampleByModify(int exampleNo);
+	
 	// 보기등록
 	int insertExample(Example example);
 	

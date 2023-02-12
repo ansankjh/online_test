@@ -15,13 +15,13 @@
 				<tr>
 					<td>학생아이디</td>
 					<td>
-						<input type="text" name="studentId">
+						<input type="text" name="studentId" value="student">
 					</td>
 				</tr>
 				<tr>
 					<td>학생비밀번호</td>
 					<td>
-						<input type="password" name="studentPw">
+						<input type="password" name="studentPw" value="123">
 					</td>
 				</tr>
 			</table>
