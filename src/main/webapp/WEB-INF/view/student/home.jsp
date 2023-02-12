@@ -213,25 +213,6 @@
 											${dateList.date}
 										</div>
 										<div>
-											<c:forEach var="t" items="${list}">
-												<!-- 시험일이 오늘보다 이전이고 응시안했으면 미응시 -->
-												<c:if test="">
-													[성적확인]${t.testTitle}
-												</c:if>
-												<!-- 시험일이 오늘보다 이전이고 응시했으면 성적확인 -->
-												<c:if test="">
-													[성적확인]${t.testTitle}
-												</c:if>
-												<c:if test="${t.testDate eq testDay}">
-													<a href="${pageContext.request.contextPath}/student/paper?testNo=${t.testNo}">
-														[응시가능]${t.testTitle}
-													</a>
-												</c:if>
-												<!-- 시험일이 오늘보다 나중이면 응시가능 -->
-												<c:if test="">
-													[시험예정]${t.testTitle}
-												</c:if>
-											</c:forEach>
 										</div>
 									</td>
 								</c:when>
@@ -244,25 +225,6 @@
 								${dateList.date}
 							</div>
 							<div>
-								<c:forEach var="t" items="${list}">
-									<!-- 시험일이 오늘보다 이전이고 응시안했으면 미응시 -->
-									<c:if test="">
-										[성적확인]${t.testTitle}
-									</c:if>
-									<!-- 시험일이 오늘보다 이전이고 응시했으면 성적확인 -->
-									<c:if test="">
-										[성적확인]${t.testTitle}
-									</c:if>
-									<c:if test="${t.testDate eq testDay}">
-										<a href="${pageContext.request.contextPath}/student/paper?testNo=${t.testNo}">
-											[응시가능]${t.testTitle}
-										</a>
-									</c:if>
-									<!-- 시험일이 오늘보다 나중이면 응시가능 -->
-									<c:if test="">
-										[시험예정]${t.testTitle}
-									</c:if>
-								</c:forEach>
 							</div>
 						</td>
 								</c:when>
@@ -272,25 +234,6 @@
 								${dateList.date}
 							</div>
 							<div>
-								<c:forEach var="t" items="${list}">
-									<!-- 시험일이 오늘보다 이전이고 응시안했으면 미응시 -->
-									<c:if test="">
-										[성적확인]${t.testTitle}
-									</c:if>
-									<!-- 시험일이 오늘보다 이전이고 응시했으면 성적확인 -->
-									<c:if test="">
-										[성적확인]${t.testTitle}
-									</c:if>
-									<c:if test="${t.testDate eq testDay}">
-										<a href="${pageContext.request.contextPath}/student/paper?testNo=${t.testNo}">
-											[응시가능]${t.testTitle}
-										</a>
-									</c:if>
-									<!-- 시험일이 오늘보다 나중이면 응시가능 -->
-									<c:if test="">
-										[시험예정]${t.testTitle}
-									</c:if>
-								</c:forEach>
 							</div>
 						</td>
 								</c:otherwise>

@@ -3,10 +3,9 @@
 <mapper namespace="goodee.gdj58.online.mapper.StudentMapper">
 	
 	<!-- 시험지 -->
-	<select id="selectPaper" parameterType="java.util.Map" resultType="java.util.Map">
+	<select id="selectPaper" parameterType="int" resultType="java.util.Map">
 		SELECT
 			q.question_no questionNo
-			, q.test_no testNo
 			, q.question_idx questionIdx
 			, q.question_title questionTitle
 			, e.example_no exampleNo
@@ -14,9 +13,9 @@
 			, e.example_title exampleTitle
 			, e.example_ox exampleOx
 		FROM question q 
-		INNER JOIN example e 
+		INNER JOIN example e
 		ON q.question_no = e.question_no
-		WHERE q.test_no = #{testNo}
+		WHERE q.test_no=#{testNo}
 	</select>
 	
 	<!-- 시험일자 -->
@@ -25,7 +24,7 @@
 			test_no testNo
 			, test_title testTitle
 			, test_date testDate
-			, teacher_no teacerNo
+			, teacher_no teacherNo
 		FROM test
 	</select>
 	

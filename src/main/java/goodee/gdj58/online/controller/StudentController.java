@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import goodee.gdj58.online.service.IdService;
 import goodee.gdj58.online.service.StudentService;
+import goodee.gdj58.online.service.TeacherService;
 import goodee.gdj58.online.vo.DateData;
 import goodee.gdj58.online.vo.Student;
 import goodee.gdj58.online.vo.Test;
@@ -27,18 +28,24 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class StudentController {
 	@Autowired StudentService studentService;
+	@Autowired TeacherService teacherService;
 	@Autowired IdService idService;
+	
 	
 	// 시험지
 	@GetMapping("/student/paper")
-	public String paper(Model model
-							, @RequestParam(value="testNo") int testNo
-							, @RequestParam(value="testTitle") String testTitle) {
+	public String paper(Model model, HttpSession session
+							, @RequestParam(value="testNo") int testNo) {
+		
+		Student loginStudent = (Student)session.getAttribute("loginStudent");
+		session.setAttribute("loginStudent", loginStudent);
 		
 		List<Map<String, Object>> list = studentService.getPaper(testNo);
+		Test t = teacherService.getTest(testNo);
 		
 		model.addAttribute("list", list);
-		model.addAttribute("testTitle", testTitle);
+		model.addAttribute("t", t);
+		
 		
 		return "student/paper";
 	}
