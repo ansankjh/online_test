@@ -10,11 +10,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 import goodee.gdj58.online.mapper.StudentMapper;
 import goodee.gdj58.online.vo.Student;
+import goodee.gdj58.online.vo.Test;
 
 @Service
 @Transactional
 public class StudentService {
 	@Autowired private StudentMapper studentMapper;
+	
+	// 시험지
+	public List<Map<String, Object>> getPaper(int testNo) {
+		return studentMapper.selectPaper(testNo);
+	}
+	
+	// 시험목록
+	public List<Test> getTestList() {
+		return studentMapper.selectTest();
+	}
 	
 	// 학생 비밀번호 수정 폼
 	public int updateStudentPw(int studentNo, String oldPw, String newPw) {

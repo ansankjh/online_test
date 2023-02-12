@@ -6,12 +6,16 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import goodee.gdj58.online.vo.Student;
+import goodee.gdj58.online.vo.Test;
 
 @Mapper
 public interface StudentMapper {
 	
-	// 회차목록
+	// 시험지
+	List<Map<String, Object>> selectPaper(int testNo);
 	
+	// 회차목록
+	List<Test> selectTest();
 	
 	// 학생 비밀번호 수정
 	int updateStudentPw(Map<String, Object> paramMap);

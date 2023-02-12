@@ -20,6 +20,7 @@ import goodee.gdj58.online.service.IdService;
 import goodee.gdj58.online.service.StudentService;
 import goodee.gdj58.online.vo.DateData;
 import goodee.gdj58.online.vo.Student;
+import goodee.gdj58.online.vo.Test;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -28,12 +29,28 @@ public class StudentController {
 	@Autowired StudentService studentService;
 	@Autowired IdService idService;
 	
+	// 시험지
+	@GetMapping("/student/paper")
+	public String paper(Model model
+							, @RequestParam(value="testNo") int testNo
+							, @RequestParam(value="testTitle") String testTitle) {
+		
+		List<Map<String, Object>> list = studentService.getPaper(testNo);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("testTitle", testTitle);
+		
+		return "student/paper";
+	}
 	// 학생 홈
 	@GetMapping("/student/home")
-	public String calendar(Model model
+	public String home(Model model
 							, HttpServletRequest request
 							, DateData dateData, HttpSession session) {
-			
+		
+		// 시험목록
+		List<Test> list = studentService.getTestList();
+		
 		Calendar cal = Calendar.getInstance();
 		DateData calendarData;
 			//검색 날짜
@@ -59,12 +76,12 @@ public class StudentController {
 			
 			if(i == today_info.get("today")){
 				calendarData = new DateData(String.valueOf(dateData.getYear())
-											, String.valueOf(dateData.getMonth())
+											, String.valueOf(dateData.getMonth()+1)
 											, String.valueOf(i)
 											, "today");
 			} else {
 				calendarData= new DateData(String.valueOf(dateData.getYear())
-											, String.valueOf(dateData.getMonth())
+											, String.valueOf(dateData.getMonth()+1)
 											, String.valueOf(i)
 											, "normal_date");
 			}
@@ -82,10 +99,22 @@ public class StudentController {
 			}
 		}
 		System.out.println(dateList);
-			
+		int todayYear = cal.get(Calendar.YEAR);
+		int todayMonth = cal.get(Calendar.MONTH) + 1;
+		int todayDate = cal.get(Calendar.DATE);
+		String testDay = todayYear + "-" + todayMonth + "-" + todayDate;
+		if(todayMonth < 10) {
+			testDay = todayYear + "-" + "0" + todayMonth + "-" + todayDate;
+			todayMonth = Integer.parseInt(testDay.substring(8));
+		}
+		
+		model.addAttribute("list", list);
 		//배열에 담음
 		model.addAttribute("dateList", dateList);	//날짜 데이터 배열
 		model.addAttribute("today_info", today_info);
+		model.addAttribute("testDay", testDay);
+		model.addAttribute("todayMonth", todayMonth);
+		
 		return "student/home";
 	}
 	
