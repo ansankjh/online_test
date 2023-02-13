@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import goodee.gdj58.online.mapper.StudentMapper;
+import goodee.gdj58.online.vo.Paper;
 import goodee.gdj58.online.vo.Student;
 import goodee.gdj58.online.vo.Test;
 
@@ -16,6 +17,32 @@ import goodee.gdj58.online.vo.Test;
 @Transactional
 public class StudentService {
 	@Autowired private StudentMapper studentMapper;
+	
+	
+	// 시험종료를 위한 답의 개수
+	public int getAnswerCnt(int testNo) {
+		return studentMapper.selectAnswerCnt(testNo);
+	}
+	
+	// 고른답 출력하기
+	public List<Paper> getPaperByScore(int studentNo) {
+		return studentMapper.selectPaperByScore(studentNo);
+	}
+	
+	// 답선택or답수정을 위한 조회
+	public Paper getPaperOne(int questionNo) {
+		return studentMapper.selectPaperOne(questionNo);
+	}
+	
+	// 답안지 수정
+	public int modifyPaper(Paper paper) {
+		return studentMapper.updatePaper(paper);
+	}
+	
+	// 답안지
+	public int addPaper(Paper paper) {
+		return studentMapper.insertPaper(paper);
+	}
 	
 	// 시험지
 	public List<Map<String, Object>> getPaper(int testNo) {

@@ -3,6 +3,7 @@ package goodee.gdj58.online.controller;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ import goodee.gdj58.online.service.IdService;
 import goodee.gdj58.online.service.StudentService;
 import goodee.gdj58.online.service.TeacherService;
 import goodee.gdj58.online.vo.DateData;
+import goodee.gdj58.online.vo.Paper;
 import goodee.gdj58.online.vo.Student;
 import goodee.gdj58.online.vo.Test;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +33,46 @@ public class StudentController {
 	@Autowired TeacherService teacherService;
 	@Autowired IdService idService;
 	
+	// 점수확인
+	@GetMapping("/student/myScore")
+	public String myScore(Model model
+							, @RequestParam(value="testNo") int testNo) {
+		
+		
+		return "student/myScore";
+	}
+	
+	// 시험종료
+	@PostMapping("/student/score")
+	public String score(@RequestParam(value="testNo") int testNo) {
+		log.debug(testNo + "<--점수확인페이지 testNo 디버깅");
+		return "redirect:/student/myScore?testNo="+testNo;
+	}
+	
+	// 답안지
+	@PostMapping("/student/addPaper")
+	public String addPaper(Model model, Paper paper
+							, @RequestParam(value="testNo") int testNo
+							, @RequestParam(value="questionNo") int questionNo) {
+		
+		log.debug(paper.getStudentNo() + "<-- 답안지 studentNo 디버깅");
+		log.debug(paper.getQuestionNo() + "<-- 답안지 questionNo 디버깅");
+		log.debug(paper.getAnswer() + "<-- 답안지 answer 디버깅");
+		log.debug(testNo + "<-- 답안지 testNo 디버깅");
+		log.debug(questionNo + "<-- 답안지 questionNo 디버깅");
+		// 답선택or수정
+		Paper p = studentService.getPaperOne(questionNo);
+		// p가 null이면(아직 답선택x)
+		if(p == null) {
+			// 답안지 작성 메서드
+			studentService.addPaper(paper);
+		} else {
+			// 답안지 수정 메서드
+			studentService.modifyPaper(paper);
+		}
+		
+		return "redirect:/student/paper?testNo="+testNo;
+	}
 	
 	// 시험지
 	@GetMapping("/student/paper")
@@ -39,13 +81,21 @@ public class StudentController {
 		
 		Student loginStudent = (Student)session.getAttribute("loginStudent");
 		session.setAttribute("loginStudent", loginStudent);
-		
+		int s = loginStudent.getStudentNo();
+		// 시험지 출력 메서드
 		List<Map<String, Object>> list = studentService.getPaper(testNo);
+		// 시험지 회차제목 출력 메서드
 		Test t = teacherService.getTest(testNo);
+		// 고른답 출력하기
+		List<Paper> pList = studentService.getPaperByScore(s);
+		// 시험종료를 위한 답의 개수
+		int cnt = studentService.getAnswerCnt(testNo);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("t", t);
-		
+		model.addAttribute("testNo", testNo);
+		model.addAttribute("s", pList);
+		model.addAttribute("cnt", cnt);
 		
 		return "student/paper";
 	}

@@ -2,6 +2,50 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="goodee.gdj58.online.mapper.StudentMapper">
 	
+	<!-- 성적확인 -->
+	<select id="selectScore"></select>
+	
+	<!-- 시험종료를 위한 답의 개수 -->
+	<select id="selectAnswerCnt" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM paper WHERE test_no = #{testNo}
+	</select>
+		
+	<!-- 고른답 -->
+	<select id="selectPaperByScore" parameterType="int" resultType="goodee.gdj58.online.vo.Paper">
+		SELECT
+			paper_no paperNo
+			, student_no studentNo
+			, question_no questionNo
+			, answer
+		FROM paper
+		WHERE student_no = #{studentNo}
+	</select>
+	
+	<!-- 답선택or답수정 -->
+	<select id="selectPaperOne" parameterType="int" resultType="goodee.gdj58.online.vo.Paper">
+		SELECT
+			paper_no paperNo
+			, student_no studentNo
+			, question_no questionNo
+			, answer
+		FROM paper
+		WHERE question_no = #{questionNo}
+	</select>
+	
+	<!-- 답안지 수정 -->
+	<update id="updatePaper" parameterType="goodee.gdj58.online.vo.Paper">
+		UPDATE paper SET answer=#{answer} WHERE question_no = #{questionNo}
+	</update>
+	
+	<!-- 답안지 -->
+	<insert id="insertPaper" parameterType="goodee.gdj58.online.vo.Paper">
+		INSERT INTO paper (
+			student_no, question_no, answer, test_no
+		) VALUES (
+			#{studentNo}, #{questionNo}, #{answer}, #{testNo}
+		)
+	</insert>
+	
 	<!-- 시험지 -->
 	<select id="selectPaper" parameterType="int" resultType="java.util.Map">
 		SELECT

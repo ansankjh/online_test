@@ -194,7 +194,6 @@
 											${dateList.date}
 										</div>
 										<div>
-											${todayMonth}
 											<c:forEach var="t" items="${list}">
 												<!-- 시험일이 오늘보다 이전이고 응시안했으면 미응시 -->
 												<!-- 시험일이 오늘보다 이전이고 응시했으면 성적확인 -->

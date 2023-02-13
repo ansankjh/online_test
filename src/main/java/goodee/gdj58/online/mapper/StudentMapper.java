@@ -1,17 +1,35 @@
 package goodee.gdj58.online.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import goodee.gdj58.online.vo.Example;
-import goodee.gdj58.online.vo.Question;
+import goodee.gdj58.online.vo.Paper;
 import goodee.gdj58.online.vo.Student;
 import goodee.gdj58.online.vo.Test;
 
 @Mapper
 public interface StudentMapper {
+	
+	// 성적확인
+	List<Map<String, Object>> selectScore(Map<String, Object> paramMap);
+	
+	// 시험종료를 위한 답의 개수
+	int selectAnswerCnt(int testNo);
+	
+	// 고른답 나오게하기
+	List<Paper> selectPaperByScore(int studentNo);
+	
+	// 답선택or답수정 조회
+	Paper selectPaperOne(int questionNo);
+	
+	// 답안지 수정
+	int updatePaper(Paper paper);
+	
+	// 답안지
+	int insertPaper(Paper paper);
 	
 	// 시험지
 	List<Map<String, Object>> selectPaper(int testNo);
