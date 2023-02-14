@@ -131,6 +131,7 @@
 		</style>
 	</head>
 	<body>
+		<c:import url="/WEB-INF/view/student/inc/studentMenu.jsp"></c:import>
 		<div class="calendar" >
 			<!--날짜 네비게이션  -->
 			<div class="navigation">

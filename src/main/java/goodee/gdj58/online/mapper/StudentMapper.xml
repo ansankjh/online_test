@@ -2,8 +2,58 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="goodee.gdj58.online.mapper.StudentMapper">
 	
-	<!-- 성적확인 -->
-	<select id="selectScore"></select>
+	<!-- 성적확인페이지 내가 고른답 정답 비교하기 -->
+	
+	<!-- 고른답 -->
+	<select id="selectMyScore" parameterType="int" resultType="goodee.gdj58.online.vo.Paper">
+		SELECT
+			paper_no paperNo
+			, student_no studentNo
+			, question_no questionNo
+			, answer
+		FROM paper
+		WHERE student_no = #{studentNo}
+	</select>
+	
+	<!-- 성적확인페이지 시험지 출력 -->
+	<select id="selectPaperByMyScore" parameterType="int" resultType="java.util.Map">
+		SELECT
+			q.question_no questionNo
+			, q.question_idx questionIdx
+			, q.question_title questionTitle
+			, e.example_no exampleNo
+			, e.example_idx exampleIdx
+			, e.example_title exampleTitle
+			, e.example_ox exampleOx
+		FROM question q 
+		INNER JOIN example e
+		ON q.question_no = e.question_no
+		WHERE q.test_no=#{testNo}
+	</select>
+	<!-- 정답 개수 -->
+	<select id="selectAnswerCount" parameterType="java.util.Map" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM example e 
+		INNER JOIN paper p 
+		ON e.question_no = p.question_no
+		WHERE e.example_idx = p.answer 
+		AND p.test_no = #{testNo}
+		AND p.student_no = #{studentNo}
+		AND e.example_ox = #{exampleOx}
+	</select>
+	
+	
+	<!-- 답안지 시험제목 -->
+	<select id="selectTestByPaper" parameterType="int" resultType="goodee.gdj58.online.vo.Test">
+		SELECT
+			test_no testNo
+			, test_title testTitle
+			, test_date testDate
+			, teacher_no teacherNo
+		FROM test
+		WHERE test_no = #{testNo}
+	</select>
 	
 	<!-- 시험종료를 위한 답의 개수 -->
 	<select id="selectAnswerCnt" parameterType="int" resultType="int">

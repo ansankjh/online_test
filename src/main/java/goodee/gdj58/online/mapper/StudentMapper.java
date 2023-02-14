@@ -1,6 +1,7 @@
 package goodee.gdj58.online.mapper;
 
-import java.util.HashMap;
+
+
 import java.util.List;
 import java.util.Map;
 
@@ -13,8 +14,22 @@ import goodee.gdj58.online.vo.Test;
 @Mapper
 public interface StudentMapper {
 	
-	// 성적확인
-	List<Map<String, Object>> selectScore(Map<String, Object> paramMap);
+	// 성적확인페이지 정답 뽑기
+	
+	
+	// 성적확인페이지 내가 고른답 정답 비교하기
+	
+	// 성적확인페이지 내가 고른답
+	List<Paper> selectMyScore(int studentNo);
+	
+	// 성적확인페이지 시험지 출력
+	List<Map<String, Object>> selectPaperByMyScore(int testNo);
+	
+	// 정답 개수
+	int selectAnswerCount(Map<String, Object> paramMap);
+	
+	// 답안지 제목 뽑기
+	Test selectTestByPaper(int testNo);
 	
 	// 시험종료를 위한 답의 개수
 	int selectAnswerCnt(int testNo);

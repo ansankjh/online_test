@@ -3,7 +3,6 @@ package goodee.gdj58.online.controller;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +20,7 @@ import goodee.gdj58.online.service.IdService;
 import goodee.gdj58.online.service.StudentService;
 import goodee.gdj58.online.service.TeacherService;
 import goodee.gdj58.online.vo.DateData;
+import goodee.gdj58.online.vo.Example;
 import goodee.gdj58.online.vo.Paper;
 import goodee.gdj58.online.vo.Student;
 import goodee.gdj58.online.vo.Test;
@@ -35,10 +35,27 @@ public class StudentController {
 	
 	// 점수확인
 	@GetMapping("/student/myScore")
-	public String myScore(Model model
-							, @RequestParam(value="testNo") int testNo) {
+	public String myScore(Model model, Paper paper, HttpSession session
+							, @RequestParam(value="testNo") int testNo
+							, @RequestParam(value="exampleOx", defaultValue = "정답") String exampleOx) {
 		
+		Student loginStudent = (Student)session.getAttribute("loginStudent");
+		int studentNo = loginStudent.getStudentNo();
+		// System.out.println(studentNo);
+		paper.setStudentNo(studentNo);
+		// 성적확인페이지 시험지 출력
+		List<Map<String, Object>> list = studentService.getPaperByMyScore(testNo);
+		// 고른답 출력하기
+		List<Paper> list2 = studentService.getPaperByScore(studentNo);
+		// 성적확인페이지 내가 고른답 정답 비교하기
 		
+		// 정답개수
+		int count = studentService.getAnswerCount(testNo, studentNo, exampleOx);
+		int score = count * 10;
+		
+		model.addAttribute("list", list);
+		model.addAttribute("list2", list2);
+		model.addAttribute("s", score);
 		return "student/myScore";
 	}
 	
@@ -85,15 +102,16 @@ public class StudentController {
 		// 시험지 출력 메서드
 		List<Map<String, Object>> list = studentService.getPaper(testNo);
 		// 시험지 회차제목 출력 메서드
-		Test t = teacherService.getTest(testNo);
+		Test t = studentService.getTestByPaper(testNo);
 		// 고른답 출력하기
 		List<Paper> pList = studentService.getPaperByScore(s);
 		// 시험종료를 위한 답의 개수
 		int cnt = studentService.getAnswerCnt(testNo);
+		// 답안지 넘기기 위한 조회
 		
 		model.addAttribute("list", list);
-		model.addAttribute("t", t);
 		model.addAttribute("testNo", testNo);
+		model.addAttribute("t", t);
 		model.addAttribute("s", pList);
 		model.addAttribute("cnt", cnt);
 		

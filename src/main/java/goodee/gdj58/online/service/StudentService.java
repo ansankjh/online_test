@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import goodee.gdj58.online.mapper.StudentMapper;
+import goodee.gdj58.online.vo.Example;
 import goodee.gdj58.online.vo.Paper;
 import goodee.gdj58.online.vo.Student;
 import goodee.gdj58.online.vo.Test;
@@ -18,6 +19,32 @@ import goodee.gdj58.online.vo.Test;
 public class StudentService {
 	@Autowired private StudentMapper studentMapper;
 	
+	// 성적확인페이지 내가 고른답 정답 비교하기
+	
+	// 고른답 출력하기
+	public List<Paper> getMyScore(int studentNo) {
+		return studentMapper.selectMyScore(studentNo);
+	}
+	
+	// 성적확인페이지 시험지 출력
+	public List<Map<String, Object>> getPaperByMyScore(int testNo) {
+		return studentMapper.selectPaperByMyScore(testNo);
+	}
+	
+	// 정답 개수
+	public int getAnswerCount(int testNo, int studentNo, String exampleOx) {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("testNo", testNo);
+		paramMap.put("studentNo", studentNo);
+		paramMap.put("exampleOx", exampleOx);
+		return studentMapper.selectAnswerCount(paramMap);
+	}
+	
+	
+	// 답안지 시험제목 출력
+	public Test getTestByPaper(int testNo) {
+		return studentMapper.selectTestByPaper(testNo);
+	}
 	
 	// 시험종료를 위한 답의 개수
 	public int getAnswerCnt(int testNo) {
