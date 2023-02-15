@@ -43,18 +43,20 @@ public class StudentController {
 		int studentNo = loginStudent.getStudentNo();
 		// System.out.println(studentNo);
 		paper.setStudentNo(studentNo);
+		paper.setTestNo(testNo);
 		// 성적확인페이지 시험지 출력
 		List<Map<String, Object>> list = studentService.getPaperByMyScore(testNo);
-		// 고른답 출력하기
-		List<Paper> list2 = studentService.getPaperByScore(studentNo);
-		// 성적확인페이지 내가 고른답 정답 비교하기
-		
+		// 성적확인페이지 정답 출력
+		List<Map<String, Object>> list2 = studentService.getMyAnswerByMyScore(testNo, exampleOx);
+		// 성적 확인페이지 고른답 출력하기 
+		List<Map<String, Object>> list3 = studentService.getMyPaperByMyScore(paper);
 		// 정답개수
 		int count = studentService.getAnswerCount(testNo, studentNo, exampleOx);
 		int score = count * 10;
 		
 		model.addAttribute("list", list);
 		model.addAttribute("list2", list2);
+		model.addAttribute("list3", list3);
 		model.addAttribute("s", score);
 		return "student/myScore";
 	}

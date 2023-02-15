@@ -19,11 +19,18 @@ import goodee.gdj58.online.vo.Test;
 public class StudentService {
 	@Autowired private StudentMapper studentMapper;
 	
-	// 성적확인페이지 내가 고른답 정답 비교하기
+	// 성적확인페이지 정답 출력
+	public List<Map<String, Object>> getMyAnswerByMyScore(int testNo, String exampleOx) {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("testNo", testNo);
+		paramMap.put("exampleOx", exampleOx);
+		return studentMapper.selectAnswerByMyScore(paramMap);
+	}
 	
-	// 고른답 출력하기
-	public List<Paper> getMyScore(int studentNo) {
-		return studentMapper.selectMyScore(studentNo);
+	
+	//성적확인페이지 고른답 출력
+	public List<Map<String, Object>> getMyPaperByMyScore(Paper paper) {
+		return studentMapper.selectMyPaperByMyScore(paper);
 	}
 	
 	// 성적확인페이지 시험지 출력

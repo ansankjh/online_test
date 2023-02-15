@@ -7,7 +7,8 @@
 		<title>myScore</title>
 	</head>
 	<body>
-		<h1>성적확인</h1>
+		<!-- 시험점수 표시 맞은개수*10 -->
+		<h1>성적확인(내 점수 : ${s})</h1>
 		<!-- 시험지 출력해서 맞은거 틀린거 표시 -->
 		<c:forEach var="q" items="${list}">
 			<table>
@@ -20,9 +21,10 @@
 					<!-- 문제 -->
 					<tr>
 						<td>
-							${q.questionIdx}. ${q.questionTitle} &nbsp; 
-							<c:forEach var="s" items="${list2}">
-								<c:if test="${q.questionNo eq s.questionNo}">
+							${q.questionIdx}. ${q.questionTitle} &nbsp;${q.answer}
+							<!-- 내가 고른답 출력 -->
+							<c:forEach var="s" items="${list3}">
+								<c:if test="${q.questionNo == s.questionNo}">
 									${s.answer}
 								</c:if>
 							</c:forEach> 
@@ -41,7 +43,5 @@
 				</tr>
 			</table>
 		</c:forEach>
-		<!-- 시험점수 표시 맞은개수*10 -->
-		${s}
 	</body>
 </html>

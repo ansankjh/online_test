@@ -14,13 +14,11 @@ import goodee.gdj58.online.vo.Test;
 @Mapper
 public interface StudentMapper {
 	
-	// 성적확인페이지 정답 뽑기
+	// 성적확인페이지 정답 출력
+	List<Map<String, Object>> selectAnswerByMyScore(Map<String, Object> paramMap);
 	
-	
-	// 성적확인페이지 내가 고른답 정답 비교하기
-	
-	// 성적확인페이지 내가 고른답
-	List<Paper> selectMyScore(int studentNo);
+	// 성적확인페이지 고른답 출력
+	List<Map<String, Object>> selectMyPaperByMyScore(Paper paper);
 	
 	// 성적확인페이지 시험지 출력
 	List<Map<String, Object>> selectPaperByMyScore(int testNo);
