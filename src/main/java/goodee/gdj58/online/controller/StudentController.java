@@ -22,6 +22,7 @@ import goodee.gdj58.online.service.TeacherService;
 import goodee.gdj58.online.vo.DateData;
 import goodee.gdj58.online.vo.Example;
 import goodee.gdj58.online.vo.Paper;
+import goodee.gdj58.online.vo.Question;
 import goodee.gdj58.online.vo.Student;
 import goodee.gdj58.online.vo.Test;
 import lombok.extern.slf4j.Slf4j;
@@ -44,12 +45,19 @@ public class StudentController {
 		// System.out.println(studentNo);
 		paper.setStudentNo(studentNo);
 		paper.setTestNo(testNo);
-		// 성적확인페이지 시험지 출력
-		List<Map<String, Object>> list = studentService.getPaperByMyScore(testNo);
-		// 성적확인페이지 정답 출력
-		List<Map<String, Object>> list2 = studentService.getMyAnswerByMyScore(testNo, exampleOx);
-		// 성적 확인페이지 고른답 출력하기 
-		List<Map<String, Object>> list3 = studentService.getMyPaperByMyScore(paper);
+		
+		// 성적확인페이지 문제 출력
+		List<Question> list = studentService.getQuestionByMyScore(paper);
+		
+		// 성적확인페이지 보기 출력
+		List<Example> list2 = studentService.getExampleByMyScore(paper);
+		
+		// 성적 확인페이지 내가 고른 답 출력
+		List<Paper> list3 = studentService.getMyAnswerByMyScore(paper);
+		
+		// 성적 확인페이지 정답 출력
+		List<Example> list4 = studentService.getExampleAnswerByMyScore(exampleOx, testNo, studentNo);
+		
 		// 정답개수
 		int count = studentService.getAnswerCount(testNo, studentNo, exampleOx);
 		int score = count * 10;
@@ -57,6 +65,7 @@ public class StudentController {
 		model.addAttribute("list", list);
 		model.addAttribute("list2", list2);
 		model.addAttribute("list3", list3);
+		model.addAttribute("list4", list4);
 		model.addAttribute("s", score);
 		return "student/myScore";
 	}

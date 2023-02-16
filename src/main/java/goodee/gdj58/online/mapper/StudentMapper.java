@@ -7,21 +7,26 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import goodee.gdj58.online.vo.Example;
 import goodee.gdj58.online.vo.Paper;
+import goodee.gdj58.online.vo.Question;
 import goodee.gdj58.online.vo.Student;
 import goodee.gdj58.online.vo.Test;
 
 @Mapper
 public interface StudentMapper {
 	
-	// 성적확인페이지 정답 출력
-	List<Map<String, Object>> selectAnswerByMyScore(Map<String, Object> paramMap);
+	// 성적 확인페이지 정답 출력
+	List<Example> selectExampleAnswerByMyScore(Map<String, Object> paramMap);
 	
-	// 성적확인페이지 고른답 출력
-	List<Map<String, Object>> selectMyPaperByMyScore(Paper paper);
+	// 성적 확인페이지 내가 고른 답 출력
+	List<Paper> selectMyAnswerByMyScore(Paper paper);
 	
-	// 성적확인페이지 시험지 출력
-	List<Map<String, Object>> selectPaperByMyScore(int testNo);
+	// 성적확인페이지 보기 출력
+	List<Example> selectExampleByMyScore(Paper paper);
+	
+	// 성적확인페이지 문제 출력
+	List<Question> selectQuestionByMyScore(Paper paper);
 	
 	// 정답 개수
 	int selectAnswerCount(Map<String, Object> paramMap);

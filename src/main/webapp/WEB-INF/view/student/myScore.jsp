@@ -9,36 +9,35 @@
 	<body>
 		<!-- 시험점수 표시 맞은개수*10 -->
 		<h1>성적확인(내 점수 : ${s})</h1>
-		<!-- 시험지 출력해서 맞은거 틀린거 표시 -->
 		<c:forEach var="q" items="${list}">
 			<table>
-				<c:set var="qIdx" value="${q.questionIdx}"/>
-				<c:if test="${qIdx != idx}">
-					<tr>
-						<td><hr></td>
-					</tr>
-					<c:set var="idx" target="idx" value="${q.questionIdx}"/>
-					<!-- 문제 -->
-					<tr>
-						<td>
-							${q.questionIdx}. ${q.questionTitle} &nbsp;${q.answer}
-							<!-- 내가 고른답 출력 -->
-							<c:forEach var="s" items="${list3}">
-								<c:if test="${q.questionNo == s.questionNo}">
-									${s.answer}
-								</c:if>
-							</c:forEach> 
-						</td>
-					</tr>
-					<!-- 구분선 -->
-					<tr>
-						<td><hr></td>
-					</tr>
-				</c:if>
-				<!-- 보기-->
 				<tr>
 					<td>
-						[${q.exampleIdx}]. ${q.exampleTitle}
+						${q.questionIdx}. ${q.questionTitle}
+						<c:forEach var="p" items="${list3}">
+							<c:if test="${q.questionNo == p.questionNo}">
+								${p.answer}
+								<c:forEach var="qa" items="${list4}">
+									<c:if test="${q.questionNo == qa.questionNo && p.answer eq qa.exampleIdx}">
+										&#11093;
+									</c:if>
+									<c:if test="${q.questionNo == qa.questionNo && p.answer ne qa.exampleIdx}">
+										&#10060; 정답 : ${qa.exampleIdx}
+									</c:if>
+								</c:forEach>
+							</c:if>
+						</c:forEach>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<c:forEach var="e" items="${list2}">
+							<c:if test="${q.questionNo == e.questionNo}">
+								<div>
+									[${e.exampleIdx}]. ${e.exampleTitle} 
+								</div>
+							</c:if>
+						</c:forEach>
 					</td>
 				</tr>
 			</table>

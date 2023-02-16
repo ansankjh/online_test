@@ -2,50 +2,60 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="goodee.gdj58.online.mapper.StudentMapper">
 	
-	<!-- 성적확인페이지 정답 출력 -->
-	<select id="selectAnswerByMyScore" parameterType="java.util.Map" resultType="java.util.Map">
+	<!-- 성적 확인페이지 정답 출력 -->
+	<select id="selectExampleAnswerByMyScore" parameterType="java.util.Map" resultType="goodee.gdj58.online.vo.Example">
 		SELECT
-			q.question_idx questionIdx
+			e.question_no questionNo
 			, e.example_idx exampleIdx
-		FROM question q
-		INNER JOIN example e
-		ON q.question_no = e.question_no
-		WHERE q.test_no = #{testNo} AND e.example_ox = #{exampleOx}
-		GROUP BY q.question_idx
-		ORDER BY question_idx ASC
-	</select>
-	
-	<!-- 성적확인페이지 고른답 출력 -->
-	<select id="selectMyPaperByMyScore" parameterType="goodee.gdj58.online.vo.Paper" resultType="java.util.Map">
-		SELECT
-			q.question_idx questionIdx
-			, q.question_no questionNo
-			, p.answer answer
-		FROM paper p INNER JOIN example e
-		ON p.question_no = e.question_no
+		FROM example e INNER JOIN paper p
+		ON e.question_no = p.question_no
 		INNER JOIN question q
-		ON q.question_no = p.question_no
-		WHERE p.student_no = #{studentNo} AND p.test_no = #{testNo}
-		GROUP BY q.question_idx
+		ON e.question_no = q.question_no
+		WHERE e.example_ox = #{exampleOx} AND p.test_no = #{testNo} AND p.student_no = #{studentNo}
 		ORDER BY q.question_idx ASC
 	</select>
 	
-	<!-- 성적확인페이지 시험지 출력 -->
-	<select id="selectPaperByMyScore" parameterType="int" resultType="java.util.Map">
+	<!-- 성적 확인페이지 내가 고른 답 출력 -->
+	<select id="selectMyAnswerByMyScore" parameterType="goodee.gdj58.online.vo.Paper" resultType="goodee.gdj58.online.vo.Paper">
 		SELECT
-			q.question_no questionNo
-			, q.question_idx questionIdx
-			, q.question_title questionTitle
+			paper_no paperNo
+			, student_no studentNo
+			, question_no questionNo
+			, answer
+			, test_no testNo
+		FROM paper
+		WHERE test_no = #{testNo} AND student_no = #{studentNo}
+	</select>
+	
+	<!-- 성적 확인페이지 보기 출력 -->
+	<select id="selectExampleByMyScore" parameterType="goodee.gdj58.online.vo.Paper" resultType="goodee.gdj58.online.vo.Example">
+		SELECT
+			p.question_no questionNo
 			, e.example_no exampleNo
+			, e.question_no questionNo
 			, e.example_idx exampleIdx
 			, e.example_title exampleTitle
-			, e.example_ox exampleOx
-		FROM question q 
-		INNER JOIN example e
-		ON q.question_no = e.question_no
-		WHERE q.test_no=#{testNo}
+			, e.example_ox exampleOdx
+		FROM example e  INNER JOIN paper p
+		ON e.question_no = p.question_no
+		WHERE p.test_no = ${testNo} AND p.student_no = ${studentNo}
+	</select>
+	<!-- 성적 확인페이지 문제 출력 -->
+	<select id="selectQuestionByMyScore" parameterType="goodee.gdj58.online.vo.Paper" resultType="goodee.gdj58.online.vo.Question">
+		SELECT
+			q.question_no questionNo
+			, q.test_no testNo
+			, q.question_idx questionIdx
+			, q.question_title questionTitle
+		FROM question q INNER JOIN paper p
+		ON q.test_no = p.test_no
+		INNER JOIN student s
+		ON p.student_no = s.student_no
+		WHERE q.test_no = #{testNo} AND s.student_no = #{studentNo}
+		GROUP BY q.question_idx
 		ORDER BY q.question_idx ASC
 	</select>
+	
 	<!-- 정답 개수 -->
 	<select id="selectAnswerCount" parameterType="java.util.Map" resultType="int">
 		SELECT

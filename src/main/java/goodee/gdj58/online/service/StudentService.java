@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import goodee.gdj58.online.mapper.StudentMapper;
 import goodee.gdj58.online.vo.Example;
 import goodee.gdj58.online.vo.Paper;
+import goodee.gdj58.online.vo.Question;
 import goodee.gdj58.online.vo.Student;
 import goodee.gdj58.online.vo.Test;
 
@@ -19,23 +20,28 @@ import goodee.gdj58.online.vo.Test;
 public class StudentService {
 	@Autowired private StudentMapper studentMapper;
 	
-	// 성적확인페이지 정답 출력
-	public List<Map<String, Object>> getMyAnswerByMyScore(int testNo, String exampleOx) {
+	// 성적 확인페이지 정답 출력
+	public List<Example> getExampleAnswerByMyScore(String exampleOx, int testNo, int studentNo) {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("testNo", testNo);
 		paramMap.put("exampleOx", exampleOx);
-		return studentMapper.selectAnswerByMyScore(paramMap);
+		paramMap.put("testNo", testNo);
+		paramMap.put("studentNo", studentNo);
+		return studentMapper.selectExampleAnswerByMyScore(paramMap);
 	}
 	
-	
-	//성적확인페이지 고른답 출력
-	public List<Map<String, Object>> getMyPaperByMyScore(Paper paper) {
-		return studentMapper.selectMyPaperByMyScore(paper);
+	// 성적 확인페이지 내가 고른 답 출력
+	public List<Paper> getMyAnswerByMyScore(Paper paper) {
+		return studentMapper.selectMyAnswerByMyScore(paper);
 	}
 	
-	// 성적확인페이지 시험지 출력
-	public List<Map<String, Object>> getPaperByMyScore(int testNo) {
-		return studentMapper.selectPaperByMyScore(testNo);
+	// 성적 확인페이지 보기 출력
+	public List<Example> getExampleByMyScore(Paper paper) {
+		return studentMapper.selectExampleByMyScore(paper);
+	}
+	
+	// 성적 확인페이지 문제 출력
+	public List<Question> getQuestionByMyScore(Paper paper) {
+		return studentMapper.selectQuestionByMyScore(paper);
 	}
 	
 	// 정답 개수
