@@ -244,6 +244,6 @@ public class TeacherController {
 	@GetMapping("/teacher/teacherLogout")
 	public String teacherLogout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/login";
+		return "redirect:/loginTeacher";
 	}
 }

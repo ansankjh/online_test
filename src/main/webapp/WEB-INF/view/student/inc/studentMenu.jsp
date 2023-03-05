@@ -6,9 +6,7 @@
 		오늘날짜 시험 리스트는 응시버튼 -> 시험지 출력(table : question(문제) X(join표시) example(보기) - 답안지 제출(table : paper) 
 	-->
 	<!-- 시험일정 -->
-	<a href="${pageContext.request.contextPath}/student/home">시험일정</a>
-	<!-- 성적확인 -->
-	<a href="${pageContext.request.contextPath}/student/testListByStudent?studentNo=${loginStudent.studentNo}">성적확인</a>
+	<a href="${pageContext.request.contextPath}/student/home">시험목록</a>
 	<!-- 비밀번호 수정 -->
 	<a href="${pageContext.request.contextPath}/student/modifyStudentPw">비밀번호수정</a>
 	<!-- 로그아웃 -->

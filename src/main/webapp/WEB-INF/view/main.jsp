@@ -19,13 +19,59 @@
 	
 	    <!-- Custom styles for this template-->
 	    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+	    <style>
+	    	.po {
+	    		position : relative;
+	    		top : 100px;
+	    	}
+	    </style>
 	</head>
 	<body>
-		<a href="${pageContext.request.contextPath}/loginEmp">사원</a>
-		<a href="${pageContext.request.contextPath}/loginTeacher">강사</a>
-		<a href="${pageContext.request.contextPath}/loginStudent">학생</a>
-		<a href="${pageContext.request.contextPath}/loginEmp" class="btn btn-primary btn-icon-split" style="width:200px; height:100px;">
-			사원로그인
-		</a>
+		
+		<div align="center" class="po">
+			<h1>online-test</h1>
+			<!-- 사원로그인 -->
+			<div class="col-xl-3 col-md-6 mb-4">
+				<div class="card border-left-primary shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="h5 mb-0 font-weight-bold text-gray-800">
+									<a href="${pageContext.request.contextPath}/loginEmp">사원로그인</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 강사로그인 -->
+			<div class="col-xl-3 col-md-6 mb-4">
+				<div class="card border-left-primary shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="h5 mb-0 font-weight-bold text-gray-800">
+									<a href="${pageContext.request.contextPath}/loginTeacher">강사로그인</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 학생로그인 -->
+			<div class="col-xl-3 col-md-6 mb-4">
+				<div class="card border-left-primary shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="h5 mb-0 font-weight-bold text-gray-800">
+									<a href="${pageContext.request.contextPath}/loginStudent">학생로그인</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>

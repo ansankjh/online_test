@@ -43,6 +43,10 @@
 	</script>
 	</head>
 	<body>
+		<!-- empMenu include -->
+		<div>
+			<c:import url="/WEB-INF/view/employee/inc/empMenu.jsp"></c:import>
+		</div>
 		<h1>사원등록</h1>
 		<div>${errorMsg}</div>
 		<div>
@@ -72,6 +76,7 @@
 			</table>
 			<div>
 				<button type="button" id="addBtn">사원등록</button>
+				<a href="${pageContext.request.contextPath}/employee/empList">등록취소</a>
 			</div>
 		</form>
 	</body>

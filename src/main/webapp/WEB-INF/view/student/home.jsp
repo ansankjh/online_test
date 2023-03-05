@@ -7,6 +7,7 @@
 		<title>home</title>
 	</head>
 	<body>
+		<c:import url="/WEB-INF/view/student/inc/studentMenu.jsp"></c:import>
 		<c:forEach var="t" items="${list}">
 			<a href="${pageContext.request.contextPath}/student/paper?testNo=${t.testNo}&testTitle=${t.testTitle}">
 				[응시가능]${t.testTitle}

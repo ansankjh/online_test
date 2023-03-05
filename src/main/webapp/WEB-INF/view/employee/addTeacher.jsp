@@ -43,6 +43,10 @@
 		</script>
 	</head>
 	<body>
+		<!-- empMenu include -->
+		<div>
+			<c:import url="/WEB-INF/view/employee/inc/empMenu.jsp"></c:import>
+		</div>
 		<h1>선생님 등록</h1>
 		<div>${msg}</div>
 		<div>
@@ -72,6 +76,7 @@
 			</table>
 			<div>
 				<button type="button" id="addBtn">등록</button>
+				<a href="${pageContext.request.contextPath}/employee/teacherList">등록취소</a>
 			</div>
 		</form>
 	</body>

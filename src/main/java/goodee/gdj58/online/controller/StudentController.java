@@ -2,6 +2,7 @@ package goodee.gdj58.online.controller;
 
 
 import java.util.ArrayList;
+
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import goodee.gdj58.online.service.IdService;
 import goodee.gdj58.online.service.StudentService;
 import goodee.gdj58.online.service.TeacherService;
-import goodee.gdj58.online.vo.DateData;
 import goodee.gdj58.online.vo.Example;
 import goodee.gdj58.online.vo.Paper;
 import goodee.gdj58.online.vo.Question;
@@ -177,6 +177,6 @@ public class StudentController {
 	@GetMapping("/student/studentLogout")
 	public String studentLogout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/login";
+		return "redirect:/loginStudent";
 	}
 }
