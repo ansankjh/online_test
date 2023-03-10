@@ -28,6 +28,6 @@
 				<button type="submit">로그인</button>
 			</div>
 		</form>
-		<a href="${pageContext.request.contextPath}/main">뒤로</a>
+		<a href="${pageContext.request.contextPath}/index">뒤로</a>
 	</body>
 </html>

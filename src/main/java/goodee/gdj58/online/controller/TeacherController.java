@@ -237,7 +237,7 @@ public class TeacherController {
 	public String loginTeacher(HttpSession session, Teacher teacher) {
 		Teacher resultTeacher = teacherService.loginTeacher(teacher);
 		session.setAttribute("loginTeacher", resultTeacher);
-		return "redirect:/teacher/testList";
+		return "redirect:/main";
 	}
 	
 	// 선생님 로그아웃

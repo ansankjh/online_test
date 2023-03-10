@@ -9501,6 +9501,7 @@ button.bg-dark:focus {
 
 .text-center {
   text-align: center !important;
+  padding-top: 100px;
 }
 
 @media (min-width: 576px) {
@@ -10864,6 +10865,7 @@ a:focus {
   background: url("https://source.unsplash.com/K4mSJ7kc0As/600x800");
   background-position: center;
   background-size: cover;
+  min-height: 600px;
 }
 
 .bg-register-image {

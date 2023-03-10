@@ -170,7 +170,7 @@ public class StudentController {
 	public String loginStudent(HttpSession session, Student student) {
 		Student resultStudent = studentService.loginStudent(student);
 		session.setAttribute("loginStudent", resultStudent);
-		return "redirect:/student/home";
+		return "redirect:/main";
 	}
 	
 	// 학생 로그아웃

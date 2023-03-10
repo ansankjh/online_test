@@ -29,20 +29,15 @@ public class EmpLoginFilter implements Filter {
 			HttpServletResponse rep = (HttpServletResponse)response;
 			HttpSession session = req.getSession();
 			if(session.getAttribute("loginEmp") == null) {
-				rep.sendRedirect(req.getContextPath() + "/login");
+				rep.sendRedirect(req.getContextPath() + "/main");
 				return;
 			}
 		} else {
 			log.debug("\u001B[31m "+" 웹브라우저 요청만 허용합니다.");
 			return;
 		}
-		
 		// controller 전
-		
-		
 		chain.doFilter(request, response);
 		//controller 후
-		
 	}
-
 }
