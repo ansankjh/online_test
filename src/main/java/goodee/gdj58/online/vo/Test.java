@@ -7,5 +7,6 @@ public class Test {
 	private int testNo;
 	private String testTitle;
 	private String testDate;
+	private String testTime;
 	private int teacherNo;
 }

@@ -50,7 +50,7 @@
 			<tr>
 				<th>시험회차</th>
 				<th>출제자</th>
-				<th>testDate</th>
+				<th>등록일</th>
 				<th>삭제</th>
 			</tr>
 			<c:forEach var="t" items="${list}">

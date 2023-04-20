@@ -18,6 +18,9 @@
 	
 	    <!-- Custom styles for this template-->
 	    <link href="/online-test/css/sb-admin-2.min.css" rel="stylesheet">
+	    
+	    <!-- Custom styles for this page -->
+ 		 <link href="/online-test/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	</head>
 	<body>
 		<!-- Page Wrapper -->
@@ -37,9 +40,6 @@
 					<div class="container-fluid">
 					
 						<!-- Page Heading -->
-						<div class="d-sm-flex align-items-center justify-content-between mb-4">
-							<h1 class="h3 mb-0 text-gray-800">메인화면</h1>
-						</div>
 						<h1>사원목록[${currentPage}]</h1>
 						<a href="${pageContext.request.contextPath}/employee/addEmp">사원등록</a>
 						<!-- 검색 -->

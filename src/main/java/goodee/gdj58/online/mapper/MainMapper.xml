@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="goodee.gdj58.online.mapper.MainMapper">
+	
+	<!-- 문제 목록 -->
+	<select id="selectTestList" resultType="java.util.Map">
+		SELECT 
+			t.test_title testTitle
+			, t.test_date testDate
+			, tc.teacher_name teacherName
+		FROM test t 
+		INNER JOIN teacher tc
+		ON t.teacher_no = tc.teacher_no
+		ORDER BY t.test_date DESC;
+	</select>
+	
+	<!-- 강사 인원수 -->
+	<select id="selectTeacherCount" resultType="int">
+		SELECT COUNT(*) FROM teacher
+	</select>
+	
+	<!-- 학생 인원수 -->
+	<select id="selectStudentCount" resultType="int">
+		SELECT COUNT(*) FROM student
+	</select>
+	
+	<!-- 문제 수 -->
+	<select id="selectTestCount" resultType="int">
+		SELECT COUNT(*) FROM test
+	</select>
+</mapper>

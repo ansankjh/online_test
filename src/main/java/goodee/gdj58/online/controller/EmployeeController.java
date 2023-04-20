@@ -163,7 +163,11 @@ public class EmployeeController {
 	
 	// 사원로그인 폼 loginEmp
 	@GetMapping("/loginEmp")
-	public String loginEmp() {
+	public String loginEmp(HttpSession session) {
+		// 강사or학생에서 직원으로 로그인할때
+		if(session.getAttribute("loginTeacher") != null || session.getAttribute("loginStudent") != null) {
+			session.invalidate();
+		}
 		return "employee/loginEmp";
 	}
 	
@@ -179,7 +183,7 @@ public class EmployeeController {
 	@GetMapping("/employee/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/loginEmp";
+		return "redirect:/index";
 	}
 	
 	/*

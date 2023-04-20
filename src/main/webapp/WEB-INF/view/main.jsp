@@ -37,16 +37,86 @@
 					<!-- Begin Page Content -->
 					<div class="container-fluid">
 					
-					<!-- Page Heading -->
-					<div class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">메인화면</h1>
-					</div>
-					
-					
-					
-					
-					   <!-- Content Row -->
-					
+						<!-- Page Heading -->
+						<div class="d-sm-flex align-items-center justify-content-between mb-4">
+							<h1 class="h3 mb-0 text-gray-800">online-test</h1>
+						</div>
+						
+						<!-- 등록된 강사, 등록된 학생, 등록된 시험 -->
+						<div class="row">
+						    <!-- Earnings (Monthly) Card Example -->
+							<div class="col-xl-3 col-md-6 mb-4">
+							    <div class="card border-left-primary shadow h-100 py-2">
+							        <div class="card-body">
+							            <div class="row no-gutters align-items-center">
+							                <div class="col mr-2">
+							                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+							                        강사</div>
+							                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+							                    	${teacherCount}
+							                    </div>
+							                </div>
+							            </div>
+							        </div>
+							    </div>
+							</div>
+							
+							<!-- Earnings (Monthly) Card Example -->
+							<div class="col-xl-3 col-md-6 mb-4">
+							    <div class="card border-left-success shadow h-100 py-2">
+							        <div class="card-body">
+							            <div class="row no-gutters align-items-center">
+							                <div class="col mr-2">
+							                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+							                        학생</div>
+							                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+							                    	${studentCount}
+							                    </div>
+							                </div>
+							            </div>
+							        </div>
+							    </div>
+							</div>
+							
+							<!-- Earnings (Monthly) Card Example -->
+							<div class="col-xl-3 col-md-6 mb-4">
+							    <div class="card border-left-info shadow h-100 py-2">
+							        <div class="card-body">
+							            <div class="row no-gutters align-items-center">
+							                <div class="col mr-2">
+							                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">등록된 시험
+							                    </div>
+							                    <div class="row no-gutters align-items-center">
+							                        <div class="col-auto">
+							                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+							                            	${testCount}
+							                            </div>
+							                        </div>
+							                    </div>
+							                </div>
+							            </div>
+							        </div>
+							    </div>
+							</div>
+						</div>
+						<!-- 등록된 강사, 등록된 학생, 등록된 시험 끝 -->
+						
+						<div class="row">
+							
+							<div class="col-lg-6">
+								<div class="card mb-4 py-3 border-left-primary">
+									<div class="card-body">
+									    <c:forEach var="t" items="${testList}">
+									    	${t.testTitle}<br> 
+									    	출제일 : ${t.testDate}<br>
+									    	출제자 : ${t.teacherName}<br>
+									    	<hr>
+									    </c:forEach>
+									</div>
+								</div>
+							</div>
+						</div>
+						
 					</div>
 					<!-- /.container-fluid -->
 				

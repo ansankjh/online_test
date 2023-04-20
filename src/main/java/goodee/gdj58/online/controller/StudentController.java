@@ -1,13 +1,9 @@
 package goodee.gdj58.online.controller;
 
 
-import java.util.ArrayList;
-
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,7 +157,11 @@ public class StudentController {
 	
 	// 학생 로그인 폼 loginStudent.jsp
 	@GetMapping("/loginStudent")
-	public String loginStudent() {
+	public String loginStudent(HttpSession session) {
+		// 직원or강사에서 학생으로 로그인시
+		if(session.getAttribute("loginEmp") != null || session.getAttribute("loginTeacher") != null) {
+			session.invalidate();
+		}
 		return "student/loginStudent";
 	}
 	
@@ -169,6 +169,7 @@ public class StudentController {
 	@PostMapping("/loginStudent")
 	public String loginStudent(HttpSession session, Student student) {
 		Student resultStudent = studentService.loginStudent(student);
+		log.debug(resultStudent + "<-- 학생 로그인 디버깅");
 		session.setAttribute("loginStudent", resultStudent);
 		return "redirect:/main";
 	}
@@ -177,6 +178,6 @@ public class StudentController {
 	@GetMapping("/student/studentLogout")
 	public String studentLogout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/loginStudent";
+		return "redirect:/index";
 	}
 }

@@ -228,14 +228,20 @@ public class TeacherController {
 	
 	// 선생님 로그인 폼
 	@GetMapping("/loginTeacher")
-	public String loginTeacher() {
+	public String loginTeacher(HttpSession session) {
+		// 직원or학생에서 강사로 로그인할때
+		if(session.getAttribute("loginEmp") != null || session.getAttribute("loginStudent") != null) {
+			session.invalidate();
+		}
 		return "teacher/loginTeacher";
 	}
 	
 	// 선생님 로그인 액션
 	@PostMapping("/loginTeacher")
 	public String loginTeacher(HttpSession session, Teacher teacher) {
+		log.debug(teacher + "<-- 로그인 teacher 액션 값 디버깅");
 		Teacher resultTeacher = teacherService.loginTeacher(teacher);
+		log.debug(resultTeacher + "<-- 로그인 resultTeacher 액션 값 디버깅");
 		session.setAttribute("loginTeacher", resultTeacher);
 		return "redirect:/main";
 	}
@@ -244,6 +250,6 @@ public class TeacherController {
 	@GetMapping("/teacher/teacherLogout")
 	public String teacherLogout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/loginTeacher";
+		return "redirect:/index";
 	}
 }

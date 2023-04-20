@@ -14,7 +14,7 @@
 				<tr>
 					<td>아이디</td>
 					<td>
-						<input type="text" name="teacherId" value="teacher">
+						<input type="text" name="teacherId" value="t1">
 					</td>
 				</tr>
 				<tr>

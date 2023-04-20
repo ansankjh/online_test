@@ -169,7 +169,7 @@
 			, teacher_id teacherId
 			, teacher_name teacherName 
 		FROM teacher 
-		WHERE teacher_id=#{teacherId} AND teacher_pw=PASSWORD(#{teacherPw}) 
+		WHERE teacher_id=#{teacherId} AND teacher_pw=PASSWORD(#{teacherPw})
 	</select>
 
 	<!-- 선생님 삭제 -->
