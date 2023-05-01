@@ -164,18 +164,34 @@ public class EmployeeController {
 	// 사원로그인 폼 loginEmp
 	@GetMapping("/loginEmp")
 	public String loginEmp(HttpSession session) {
+
 		// 강사or학생에서 직원으로 로그인할때
 		if(session.getAttribute("loginTeacher") != null || session.getAttribute("loginStudent") != null) {
 			session.invalidate();
 		}
+		
+		
 		return "employee/loginEmp";
 	}
 	
 	// 사원로그인 액션 loginEmp
 	@PostMapping("/loginEmp")
-	public String loginEmp(HttpSession session, Employee employee) {
+	public String loginEmp(HttpSession session, Employee employee, Model model) {
+		// 로그인폼 입력값 디버깅
+		log.debug(employee + "<-- 로그인 정보 디버깅");
+		
+		// 입력값이 db와 일치하면 로그인
 		Employee resultEmp = employeeService.login(employee);
+		log.debug(resultEmp + "<-- resultEmp 디버깅");
+		
+		// 입력값이 db와 일치하지 않으면 아이디 비밀번호 확인 메시지 출력
+		if(resultEmp == null) {
+			model.addAttribute("msg", "아이디 또는 비밀번호를 확인해주세요.");
+			return "employee/loginEmp";
+		}
+		
 		session.setAttribute("loginEmp", resultEmp);
+		
 		return "redirect:/main";
 	}
 	

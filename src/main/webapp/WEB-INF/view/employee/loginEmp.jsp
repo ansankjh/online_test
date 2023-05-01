@@ -16,6 +16,24 @@
 	        rel="stylesheet">
 	    <!-- Custom styles for this template-->
 	    <link href="css/sb-admin-2.css" rel="stylesheet">
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+	    <script>
+	    	$(document).ready(function() {
+	    		$('#login').click(function() {
+	    			// 아이디 공백체크
+		    		if($('#empId').val() == '') {
+		    			$('#empIdMsg').text('아이디를 입력해주세요.');
+		    			$('#empId').focus();
+		    		// 비밀번호 공백 체크
+		    		} else if($('#empId').val() != '' && $('#empPw').val() == '') {
+		    			$('#empPwMsg').text('비밀번호를 입력해주세요.');
+						$('#empPw').focus();
+		    		} else if($('#empId').val() != '' && $('#empPw').val() != '') {
+		    			$('#loginForm').submit();
+		    		}
+	    		})
+	    	})
+	    </script>
 	</head>
 	<body class="bg-gradient-primary">
 	    <div class="container">
@@ -32,17 +50,20 @@
 	                                    <div class="text-center">
 	                                        <h1 class="h4 text-gray-900 mb-4">사원로그인</h1>
 	                                    </div>
-	                                    <form action="${pageContext.request.contextPath}/loginEmp" method="post">
+	                                    ${msg}
+	                                    <form action="${pageContext.request.contextPath}/loginEmp" method="post" id="loginForm">
 	                                        <div class="form-group">
 	                                            <input type="text" name="empId" value="employee" class="form-control form-control-user"
-	                                                id="exampleInputEmail" aria-describedby="emailHelp">
+	                                                id="empId" aria-describedby="emailHelp">
+												<span id="empIdMsg"></span>
 	                                        </div>
 	                                        <div class="form-group">
 	                                            <input type="password" name="empPw" value="123" class="form-control form-control-user"
-	                                                id="exampleInputPassword">
+	                                                id="empPw">
+												<span id="empPwMsg"></span>
 	                                        </div>
 	                                        <div>
-												<button type="submit" class="btn btn-primary btn-user btn-block">로그인</button>
+												<button type="button" class="btn btn-primary btn-user btn-block" id="login">로그인</button>
 												<a href="${pageContext.request.contextPath}/index" class="btn btn-primary btn-user btn-block">
 													뒤로
 												</a>
