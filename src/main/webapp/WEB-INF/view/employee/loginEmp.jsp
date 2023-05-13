@@ -5,6 +5,11 @@
 	<head>
 		<meta charset="utf-8">
 	    <title>loginEmp</title>
+	    <style>
+	    	.msgColor {
+	    		color : #FF0000;
+	    	}
+	    </style>
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	    <meta name="description" content="">
@@ -32,6 +37,11 @@
 		    			$('#loginForm').submit();
 		    		}
 	    		})
+	    		
+	    		// 아이디 입력 시 메시지 제거
+	    	    $('#empId').on('input', function() {
+	    	        $('#empIdMsg').text('');
+	    	    });
 	    	})
 	    </script>
 	</head>
@@ -55,12 +65,12 @@
 	                                        <div class="form-group">
 	                                            <input type="text" name="empId" value="employee" class="form-control form-control-user"
 	                                                id="empId" aria-describedby="emailHelp">
-												<span id="empIdMsg"></span>
+												<span id="empIdMsg" class="msgColor"></span>
 	                                        </div>
 	                                        <div class="form-group">
 	                                            <input type="password" name="empPw" value="123" class="form-control form-control-user"
 	                                                id="empPw">
-												<span id="empPwMsg"></span>
+												<span id="empPwMsg" class="msgColor"></span>
 	                                        </div>
 	                                        <div>
 												<button type="button" class="btn btn-primary btn-user btn-block" id="login">로그인</button>
@@ -87,5 +97,15 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+    <script>
+	    // 새로고침시 get 파라미터 제거
+		$(document).keydown(function(e){
+			key = (e)?e.keyCode:event.keyCode;
+			//alert(key);
+			if(key == 116 || (event.ctrlKey && event.keyCode == 82)) {
+				history.replaceState({}, null, location.pathname);
+			}
+		})
+	</script>
 	</body>
 </html>

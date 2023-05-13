@@ -40,11 +40,11 @@
 					<div class="container-fluid">
 					
 						<!-- Page Heading -->
-						<h1>사원목록[${currentPage}]</h1>
+						<h1>사원목록</h1>
 						<a href="${pageContext.request.contextPath}/employee/addEmp">사원등록</a>
 						<!-- 검색 -->
 						<form action="${pageContext.request.contextPath}/employee/empList" method="get">
-							<input type="text" name="searchWord" value="${searchWord}">
+							<input type="text" name="searchWord" value="${searchWord}" placeholder="이름으로 검색해주세요.">
 							<button type="submit">검색</button>
 						</form>
 						<!-- 사원 테이블 -->

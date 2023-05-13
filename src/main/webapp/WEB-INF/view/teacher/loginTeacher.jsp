@@ -17,6 +17,13 @@
 	        rel="stylesheet">
 	    <!-- Custom styles for this template-->
 	    <link href="css/sb-admin-2.css" rel="stylesheet">
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+	    <script>
+	    $(document).ready(function() {
+	    	// 로그인 버튼 클릭시 유효성 검사
+	    	$()
+	    })
+	    </script>
 	</head>
 	<body>
 		<div class="container">
@@ -36,11 +43,11 @@
 	                                    <form action="${pageContext.request.contextPath}/loginTeacher" method="post">
 	                                        <div class="form-group">
 	                                            <input type="text" name="teacherId" value="t1" class="form-control form-control-user"
-	                                                id="exampleInputEmail" aria-describedby="emailHelp">
+	                                                id="teacherId" aria-describedby="emailHelp">
 	                                        </div>
 	                                        <div class="form-group">
 	                                            <input type="password" name="teacherPw" value="123" class="form-control form-control-user"
-	                                                id="exampleInputPassword">
+	                                                id="teacherPw">
 	                                        </div>
 	                                        <div>
 												<button type="submit" class="btn btn-primary btn-user btn-block">로그인</button>
