@@ -150,15 +150,30 @@ public class EmployeeController {
 	
 	// 사원 비밀번호 수정 액션 modifyEmpPw
 	@PostMapping("/employee/modifyEmpPw")
-	public String modifyEmpPw(HttpSession session
+	public String modifyEmpPw(HttpSession session, Model model
+								, @RequestParam(value="empId") String empId
 								, @RequestParam(value="oldPw") String oldPw
 								, @RequestParam(value="newPw") String newPw) {
 		
-		Employee loginEmp = (Employee)session.getAttribute("loginEmp");
+		log.debug("사원 비밀번호 변경시 아이디 디버깅" + "=" + empId);
+		log.debug("사원 비밀번호 변경시 기존비밀번호 디버깅" + "=" + oldPw);
+		log.debug("사원 비밀번호 변경시 변경할 비밀번호 디버깅" + "=" + newPw);
 		
-		employeeService.updateEmployeePw(loginEmp.getEmpNo(), oldPw, newPw);
+		// 기존비밀번호 확인(사원 비밀번호 변경시)
+		Employee emp = employeeService.getEmployee(empId, oldPw);
+		// emp가 null이면 기존 비밀번호 오류
+		if(emp == null) {
+			model.addAttribute("msg", "기존 비밀번호를 확인해주세요.");
+			return "employee/modifyEmpPw";
+		}
 		
-		return "redirect:/employee/empList";
+		// 비밀번호 변경 성공시 세션 삭제 후 alert.jsp로 msg를 가지고 리다이렉트 후 url로 가기
+		employeeService.updateEmployeePw(empId, oldPw, newPw);
+		session.invalidate();
+		model.addAttribute("msg", "변경된 비밀번호로 다시 로그인해주세요.(사원)");
+		model.addAttribute("url", "/online-test/loginEmp");
+		return "alert";
+		
 	}
 	
 	// 사원로그인 폼 loginEmp

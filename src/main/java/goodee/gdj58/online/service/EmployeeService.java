@@ -19,10 +19,18 @@ public class EmployeeService {
 	@Autowired // 필요한 의존 객체의 “타입"에 해당하는 빈을 찾아 주입한다.
 	private EmployeeMapper employeeMapper;
 	
-	// 사원 비밀번호 수정
-	public int updateEmployeePw(int empNo, String oldPw, String newPw) {
+	// 기존비밀번호 확인(사원 비밀번호 변경시)
+	public Employee getEmployee(String empId, String oldPw) {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("empNo", empNo);
+		paramMap.put("empId", empId);
+		paramMap.put("oldPw", oldPw);
+		return employeeMapper.selectEmployee(paramMap);
+	}
+	
+	// 사원 비밀번호 수정
+	public int updateEmployeePw(String empId, String oldPw, String newPw) {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("empId", empId);
 		paramMap.put("oldPw", oldPw);
 		paramMap.put("newPw", newPw);
 		return employeeMapper.updateEmployeePw(paramMap);

@@ -26,23 +26,27 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 		<script>
 			$(document).ready(function() {
-				$('#ckBtn').click(function(){
-					$.ajax({
-						url:'${pageContext.request.contextPath}/studentIdck'
-						, type:'get'
-						, data : {studentId:$('#id').val()}
-						, success:function(model){ // model : 'YES' / 'NO'
-							if(model=='YES') {
-								// 사용가능한 아이디
-								$('#studentId').val($('#id').val());
-								$('#empPw').focus();
-							} else {
-								// 사용중인 아이디
-								alert($('#id').val()+'는 사용중인 아이디입니다.');
-								$('#id').focus();
+				$('#id').blur(function(){
+					// 중복확인 아이디 빈칸 체크
+					if($('#id').val() == '') {
+						alert('아이디를 입력해주세요.');
+					} else {
+						$.ajax({
+							url:'${pageContext.request.contextPath}/studentIdck'
+							, type:'get'
+							, data : {studentId:$('#id').val()}
+							, success:function(model){ // model : 'YES' / 'NO'
+								if(model=='YES') {
+									// 사용가능한 아이디
+									$('#studentId').val($('#id').val());
+									$('#empPw').focus();
+								} else {
+									// 사용중인 아이디
+									alert($('#id').val()+'는 사용중인 아이디입니다.');
+								}
 							}
-						}
-					});
+						});
+					}
 				});
 				
 				$('#addBtn').click(function() {
@@ -84,22 +88,22 @@
 											</div>
 											<!-- 아이디 -->
 											<div class="form-group">
-												<input type="text" class="form-control form-control-user" name="teacherId" id="teacherId"
+												<input type="text" class="form-control form-control-user" name="studentId" id="studentId"
 														placeholder="중복검사 후 아이디 자동 입력" readonly="readonly">
 											</div>
 											<!-- 사원 비밀번호 -->
 											<div class="form-group">
-												<input type="password" class="form-control form-control-user" name="teacherPw" id="teacherPw"
+												<input type="password" class="form-control form-control-user" name="studentPw" id="studentPw"
 														placeholder="비밀번호">
 											</div>
 											<!--  사원이름 -->
 											<div class="form-group">
-												<input type="text" class="form-control form-control-user" name="teacherName" id="teacherName"
+												<input type="text" class="form-control form-control-user" name="studentName" id="studentName"
 														placeholder="사원이름">
 											</div>
 											<!-- 사원등록버튼 -->
-											<button class="btn-primary btn-user btn-block" type="button" id="addBtn">강사등록</button>
-											<a href="${pageContext.request.contextPath}/employee/teacherList" class="btn btn-primary btn-user btn-block">
+											<button class="btn-primary btn-user btn-block" type="button" id="addBtn">학생등록</button>
+											<a href="${pageContext.request.contextPath}/employee/studentList" class="btn btn-primary btn-user btn-block">
 											    뒤로
 											</a>
 										</form>
@@ -132,39 +136,5 @@
 				}
 			})
 		</script>
-		
-		
-		<h1>학생등록</h1>
-		<div>${msg}</div>
-		<div>
-			<input type="text" id="id">
-			<button type="button" id="ckBtn">중복검사</button>
-		</div>
-		<form action="${pageContext.request.contextPath}/employee/addStudent" method="post" id="addForm">
-			<table border="1">
-				<tr>
-					<td>학생아이디</td>
-					<td>
-						<input type="text" name="studentId" id="studentId" readonly="readonly">
-					</td>
-				</tr>
-				<tr>
-					<td>학생비밀번호</td>
-					<td>
-						<input type="password" name="studentPw" id="studentPw">
-					</td>
-				</tr>
-				<tr>
-					<td>학생이름</td>
-					<td>
-						<input type="text" name="studentName" id="studentName">
-					</td>
-				</tr>
-			</table>
-			<div>
-				<button type="button" id="addBtn">등록</button>
-				<a href="${pageContext.request.contextPath}/employee/studentList">등록취소</a>
-			</div>
-		</form>
 	</body>
 </html>
