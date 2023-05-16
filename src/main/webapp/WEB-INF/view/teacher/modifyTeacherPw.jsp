@@ -59,6 +59,7 @@
 										<div class="text-center">
 										    <h1 class="h4 text-gray-900 mb-2">${loginTeacher.teacherName}선생님 비밀번호 수정</h1>
 										</div>
+										<div>${msg}</div>
 										<form class="user" action="${pageContext.request.contextPath}/teacher/modifyTeacherPw" method="post" id="modifyForm">
 											<!-- 아이디 -->
 											<div class="form-group">
@@ -89,5 +90,16 @@
 				</div>
 			</div>
 		</div>
+		
+		<script>
+		    // 새로고침시 get 파라미터 제거
+			$(document).keydown(function(e){
+				key = (e)?e.keyCode:event.keyCode;
+				//alert(key);
+				if(key == 116 || (event.ctrlKey && event.keyCode == 82)) {
+					history.replaceState({}, null, location.pathname);
+				}
+			})
+		</script>
 	</body>
 </html>

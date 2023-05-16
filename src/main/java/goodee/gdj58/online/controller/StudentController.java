@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import goodee.gdj58.online.service.IdService;
 import goodee.gdj58.online.service.StudentService;
 import goodee.gdj58.online.service.TeacherService;
+import goodee.gdj58.online.vo.Employee;
 import goodee.gdj58.online.vo.Example;
 import goodee.gdj58.online.vo.Paper;
 import goodee.gdj58.online.vo.Question;
@@ -132,7 +133,6 @@ public class StudentController {
 		// 시험목록
 		List<Test> list = studentService.getTestList();
 		
-		
 		model.addAttribute("list", list);
 		return "student/home";
 	}
@@ -145,14 +145,31 @@ public class StudentController {
 	
 	// 학생 비밀번호 수정 액션
 	@PostMapping("/student/modifyStudentPw")
-	public String modifyStudentPw(HttpSession session
+	public String modifyStudentPw(HttpSession session, Model model
+								, @RequestParam(value="studentId") String studentId
 								, @RequestParam(value="oldPw") String oldPw
 								, @RequestParam(value="newPw") String newPw) {
-		Student loginStudent = (Student)session.getAttribute("loginStudent");
 		
-		studentService.updateStudentPw(loginStudent.getStudentNo(), oldPw, newPw);
+		log.debug("StudentId" + "=" + studentId);
+		log.debug("oldPw" + "=" + oldPw);
+		log.debug("newPw" + "=" + newPw);
 		
-		return "redirect:/student/studentList";
+		// 기존비밀번호 확인(학생 비밀번호 변경시)
+		Student student = studentService.getStudent(studentId, oldPw);
+		
+		// emp가 null이면 기존 비밀번호 오류
+		if(student == null) {
+			model.addAttribute("msg", "기존 비밀번호를 확인해주세요.");
+			return "student/modifyStudentPw";
+		}
+		
+		// 비밀번호 변경 성공시 세션 삭제 후 alert.jsp로 msg를 가지고 리다이렉트 후 url로 가기
+		studentService.updateStudentPw(studentId, oldPw, newPw);
+		session.invalidate();
+		model.addAttribute("msg", "변경된 비밀번호로 다시 로그인해주세요.(학생)");
+		model.addAttribute("url", "/online-test/loginStudent");
+		
+		return "alert";
 	}
 	
 	// 학생 로그인 폼 loginStudent.jsp

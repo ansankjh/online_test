@@ -88,7 +88,6 @@
 			<div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
 				<div class="bg-white py-2 collapse-inner rounded">
 					<a class="collapse-item" href="${pageContext.request.contextPath}/student/home">시험목록</a>
-					<a class="collapse-item" href="register.html">성적확인</a>
 				</div>
 			</div>
 		</li>

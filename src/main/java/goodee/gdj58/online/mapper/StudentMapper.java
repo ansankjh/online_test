@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import goodee.gdj58.online.vo.Employee;
 import goodee.gdj58.online.vo.Example;
 import goodee.gdj58.online.vo.Paper;
 import goodee.gdj58.online.vo.Question;
@@ -54,6 +55,9 @@ public interface StudentMapper {
 	
 	// 회차목록
 	List<Test> selectTest();
+	
+	// 학생 기존 비밀번호 확인(비밀번호변경)
+	Student selectStudent(Map<String, Object> paramMap);
 	
 	// 학생 비밀번호 수정
 	int updateStudentPw(Map<String, Object> paramMap);

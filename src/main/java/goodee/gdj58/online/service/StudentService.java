@@ -9,12 +9,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import goodee.gdj58.online.mapper.StudentMapper;
+import goodee.gdj58.online.vo.Employee;
 import goodee.gdj58.online.vo.Example;
 import goodee.gdj58.online.vo.Paper;
 import goodee.gdj58.online.vo.Question;
 import goodee.gdj58.online.vo.Student;
 import goodee.gdj58.online.vo.Test;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @Transactional
 public class StudentService {
@@ -94,10 +97,18 @@ public class StudentService {
 		return studentMapper.selectTest();
 	}
 	
-	// 학생 비밀번호 수정 폼
-	public int updateStudentPw(int studentNo, String oldPw, String newPw) {
+	// 기존비밀번호 확인(사원 비밀번호 변경시)
+	public Student getStudent(String studentId, String oldPw) {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("studentNo", studentNo);
+		paramMap.put("studentId", studentId);
+		paramMap.put("oldPw", oldPw);
+		return studentMapper.selectStudent(paramMap);
+	}
+	
+	// 학생 비밀번호 수정 폼
+	public int updateStudentPw(String studentId, String oldPw, String newPw) {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("studentId", studentId);
 		paramMap.put("oldPw", oldPw);
 		paramMap.put("newPw", newPw);
 		return studentMapper.updateStudentPw(paramMap);

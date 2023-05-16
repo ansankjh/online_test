@@ -32,6 +32,19 @@
 				});
 			});
 		</script>
+		<style>
+			.question-container {
+				display: flex;
+				flex-direction: row;
+				width: 100%;
+			}
+	
+			.question-column {
+				flex-basis: 50%;
+				box-sizing: border-box;
+				padding: 0 10px;
+			}
+		</style>
 	</head>
 	<body>
 		<h1>제 ${t.testNo}회 ${t.testTitle}</h1>
@@ -73,6 +86,7 @@
 						<td><hr></td>
 					</tr>
 				</c:if>
+				
 				<!-- 보기-->
 				<tr>
 					<td>
@@ -85,7 +99,10 @@
 		<form action="${pageContext.request.contextPath}/student/score" method="post" id="exitForm">
 			<input type="hidden" name="testNo" value="${t.testNo}">
 			<input type="hidden" name="cnt" value="${cnt}" id="cnt">
-			<button type="button" id="exit">시험종료</button>
+			<!-- 보기 10개 다 골랐으면 -->
+			<c:if test="${cnt == 10}">
+				<button type="button" id="exit">시험종료(성적확인)</button>
+			</c:if>
 		</form>
 	</body>
 </html>
