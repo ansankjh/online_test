@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import goodee.gdj58.online.mapper.TeacherMapper;
+import goodee.gdj58.online.vo.Employee;
 import goodee.gdj58.online.vo.Example;
 import goodee.gdj58.online.vo.Question;
 import goodee.gdj58.online.vo.Teacher;
@@ -86,6 +87,11 @@ public class TeacherService {
 		return teacherMapper.deleteTest(testNo);
 	}
 	
+	// 시험회차 삭제시 문제 유무 확인
+	public List<Question> getQuestionIdx(int testNo) {
+		return teacherMapper.selectQuestionIdx(testNo);
+	}
+	
 	// 시험회차 등록
 	public int addTest(Test test) {
 		return teacherMapper.insertTest(test);
@@ -107,10 +113,18 @@ public class TeacherService {
 	}
 	/*--------------------------------선생님-------------------------------------------*/
 	
-	// 비밀번호 수정 
-	public int updateTeacherPw(int teacherNo, String oldPw, String newPw) {
+	// 기존비밀번호 확인(강사 비밀번호 변경시)
+	public Teacher getTeacher(String teacherId, String oldPw) {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("teacherNo", teacherNo);
+		paramMap.put("teacherId", teacherId);
+		paramMap.put("oldPw", oldPw);
+		return teacherMapper.selectTeacher(paramMap);
+	}
+	
+	// 비밀번호 수정 
+	public int updateTeacherPw(String teacherId, String oldPw, String newPw) {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("teacherId", teacherId);
 		paramMap.put("oldPw", oldPw);
 		paramMap.put("newPw", newPw);
 		return teacherMapper.updateTeacherPw(paramMap);

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import goodee.gdj58.online.service.IdService;
 import goodee.gdj58.online.service.TeacherService;
+import goodee.gdj58.online.vo.Employee;
 import goodee.gdj58.online.vo.Example;
 import goodee.gdj58.online.vo.Question;
 import goodee.gdj58.online.vo.Teacher;
@@ -76,6 +77,7 @@ public class TeacherController {
 	@PostMapping("/teacher/addExample")
 	public String addExample(Example example
 								, @RequestParam(value="questionNo") int questionNo) {
+		
 		teacherService.addExample(example);
 		
 		return "redirect:/teacher/exampleList?questionNo="+questionNo;
@@ -125,6 +127,18 @@ public class TeacherController {
 	public String selectQuestionList(Model model
 										, @RequestParam(value="testNo") int testNo) {
 		
+		// 시험회차 삭제시 문제 유무 확인
+		List<Question> idxList = teacherService.getQuestionIdx(testNo);
+		int idx = 0;	
+		
+		if(idxList.isEmpty()) {
+			idx = 0;
+		} else if(!idxList.isEmpty()) {
+			idx = 1;
+		}
+		
+		log.debug(idx + "<-- idx List 디버깅");
+		
 		List<Question> list = teacherService.getQuestionList(testNo);
 		Test test = teacherService.getTest(testNo);
 		int questionIdx = 1;
@@ -136,7 +150,7 @@ public class TeacherController {
 		model.addAttribute("test", test);
 		model.addAttribute("testNo", testNo);
 		model.addAttribute("questionIdx", questionIdx);
-		
+		model.addAttribute("idx", idx);
 		
 		return "teacher/questionList";
 	}
@@ -153,9 +167,10 @@ public class TeacherController {
 	// 시험회차 삭제
 	@GetMapping("/teacher/removeTest")
 	public String removeTest(Model model, int testNo) {
-		// 회차 삭제 메서드
-		teacherService.removeTest(testNo);
 		
+		// 회차 삭제 메서드
+		teacherService.removeTest(testNo);		
+	
 		return "redirect:/teacher/testList";
 	}
 	
@@ -215,15 +230,25 @@ public class TeacherController {
 	
 	// 비밀번호 수정 액션
 	@PostMapping("/teacher/modifyTeacherPw")
-	public String updateTeacherPw(HttpSession session
+	public String updateTeacherPw(HttpSession session, Model model
+									, @RequestParam(value="teacherId") String teacherId
 									, @RequestParam(value="oldPw") String oldPw
 									, @RequestParam(value="newPw") String newPw) {
 		
-		Teacher loginTeacher = (Teacher)session.getAttribute("loginTeacher");
+		// 기존비밀번호 확인(강사 비밀번호 변경시)
+		Teacher teacher = teacherService.getTeacher(teacherId, oldPw);
+		// teacher이 null이면 기존 비밀번호 오류
+		if(teacher == null) {
+			model.addAttribute("msg", "기존 비밀번호를 확인해주세요.");
+			return "teacher/modifyTeacherPw";
+		}
 		
-		int row = teacherService.updateTeacherPw(loginTeacher.getTeacherNo(), oldPw, newPw);
-		
-		return "redirect:/teacher/teacherList";
+		// 비밀번호 변경 성공시 세션 삭제 후 alert.jsp로 msg를 가지고 리다이렉트 후 url로 가기
+		teacherService.updateTeacherPw(teacherId, oldPw, newPw);
+		session.invalidate();
+		model.addAttribute("msg", "변경된 비밀번호로 다시 로그인해주세요.(강사)");
+		model.addAttribute("url", "/online-test/loginTeacher");
+		return "alert";
 	}
 	
 	// 선생님 로그인 폼

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import goodee.gdj58.online.vo.Employee;
 import goodee.gdj58.online.vo.Example;
 import goodee.gdj58.online.vo.Question;
 import goodee.gdj58.online.vo.Teacher;
@@ -52,6 +53,8 @@ public interface TeacherMapper {
 	
 	// 시험회차 삭제 removeTest
 	int deleteTest(int testNo);
+	// 시험회차 삭제시 문제 유무 확인
+	List<Question> selectQuestionIdx(int textNo);
 	
 	// 시험회차 등록 addTest
 	int insertTest(Test test);
@@ -61,6 +64,9 @@ public interface TeacherMapper {
 	
 	// 시험회차 목록(여러개의 vo를 받기위해 Map사용)
 	List<Map<String, Object>> selectTestListByTeacher(Map<String, Object> paramMap);
+	
+	// 사원 기존 비밀번호 확인(비밀번호변경)
+	Teacher selectTeacher(Map<String, Object> paramMap);
 	
 	// 비밀번호 수정
 	int updateTeacherPw(Map<String, Object> paramMap);
